@@ -892,7 +892,7 @@ dots.forEach(function(dot){
     }else{
       el.scrollIntoView({behavior:'smooth'});
     }
-  });
+    });
 });
 
 // ── MOBILE MENU ──
@@ -1663,7 +1663,7 @@ if('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 // Back/bfcache navigation also restores scroll — reset there too.
 window.addEventListener('pageshow', function(ev){
-  if(ev.persisted || window.scrollY !== 0){
+  if(ev.persisted){
     window.scrollTo(0, 0);
     if(lenis) lenis.scrollTo(0, { immediate: true });
   }
