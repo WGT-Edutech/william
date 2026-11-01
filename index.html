@@ -42,7 +42,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 /* Title + description slate: two glass boxes, left of the whale */
 .intro-slate{position:fixed;left:5vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1.3rem;z-index:6;opacity:0;width:min(54vw,660px);align-items:flex-start;pointer-events:none;will-change:transform,opacity}
 .quote-stage{position:fixed;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;opacity:0;pointer-events:none;will-change:opacity;text-align:center;padding:0 6vw}
-.quote-stage blockquote{font-family:'Roboto Flex',sans-serif;font-weight:500;font-style:italic;font-size:clamp(1.6rem,3.6vw,2.9rem);line-height:1.35;letter-spacing:.02em;color:var(--text-cream);max-width:min(78vw,900px);text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.quote-stage blockquote{font-family:'Roboto Flex',sans-serif;font-weight:500;font-style:italic;font-size:clamp(1.6rem,3.6vw,2.9rem);line-height:1.6;letter-spacing:.02em;color:var(--text-cream);max-width:min(78vw,900px);text-shadow:0 2px 18px rgba(0,0,0,.55)}
 .quote-stage .quote-mark{font-family:Georgia,serif;font-size:clamp(3.4rem,7vw,5.6rem);line-height:0;color:var(--accent-coral);opacity:.9;transform:translateY(1.2rem)}
 .quote-stage cite{font-family:'Oswald',sans-serif;font-style:normal;font-size:clamp(.9rem,1.4vw,1.1rem);text-transform:uppercase;letter-spacing:.22em;color:rgba(244,241,234,.62)}
 .desc-line{position:fixed;left:5vw;top:calc(50% + 45px);z-index:6;opacity:0;pointer-events:none;will-change:transform,opacity;
@@ -62,7 +62,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
   opacity:.55;filter:blur(1px)}
 
-#galleryRoom{position:absolute;inset:0;z-index:30;perspective:2400px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;cursor:grab}
+#galleryRoom{position:absolute;inset:0;z-index:30;perspective:2400px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:visible;cursor:grab;pointer-events:auto}
 #galleryRoom.grabbing{cursor:grabbing}
 #r6 .sticky{overflow:visible}
 /* Cylinder camera (React Bits circular-carousel, cylinder preset): the ring sits
@@ -201,7 +201,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 
 .landscape-overlay{display:none}
 @media(max-width:768px) and (orientation:portrait){
-  .landscape-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;text-align:center;padding:2rem}
+  .landscape-overlay{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;gap:1rem;padding:.8rem 1rem;text-align:center;font-size:.85rem}
   .landscape-overlay .lo-icon{font-size:3rem;animation:loRotate 2s ease-in-out infinite}
   @keyframes loRotate{0%,20%{transform:rotate(0deg)}60%,100%{transform:rotate(90deg)}}
   .landscape-overlay h2{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
@@ -268,8 +268,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 <section class="room r4h" id="r4">
   <div class="sticky"></div>
   <div class="quote-stage" id="quoteStage">
-    <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-    <blockquote>My vision is a forest that feeds itself and the people that nurture it.</blockquote>
+    <blockquote><span class="quote-mark" aria-hidden="true">&ldquo;</span>My vision is a forest that feeds itself and the people that nurture it.<span class="quote-mark" aria-hidden="true">&rdquo;</span></blockquote>
     <cite>&mdash; William Thomason</cite>
   </div>
 </section>
@@ -288,9 +287,10 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <h2 class="content-title">9 years of passionate growing and conservation practice, IT/Media/Webdev skills and an understanding of social media and tourism. Quality control. Scientific reason.</h2>
     <p class="content-lede">I'm William Thomason — a Regenerative Food Forest Planner who has spent nine years designing poison-free growing systems (aquaponics, syntropic permaculture, hugel beds). I'm looking to bring that experience to Isikhova, alongside the other work I do: building infrastructure and tree-walkways / treehouses, running adventure-camp setups and workshops &amp; events, designing in Blender, producing sound journeys and retreats, and handling web development and social-media / PR quality control.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Term</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">I'm not asking for a salary — I have my own income, solar and internet. Fixed work on the land in exchange for basic living arrangements. Apart from that, proceeds shares for commercial endeavours on the land can be discussed on a per-project basis.</p></div>
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Goal</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">To use my hard earned knowledge of natural systems and off-grid communities to play an integral role in establishing Isikhova and Ironwood and making it an exemplary pillar of conservation and sustainability that sets an example to the world.</p></div>
-    </div>
+          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Term</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">I'm not asking for a salary — I have my own income, solar and internet. Fixed work on the land in exchange for basic living arrangements. Apart from that, proceeds shares for commercial endeavours on the land can be discussed on a per-project basis.</p></div>
+          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Goal</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">To use my hard earned knowledge of natural systems and off-grid communities to play an integral role in establishing Isikhova and Ironwood and making it an exemplary pillar of conservation and sustainability that sets an example to the world.</p></div>
+          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Grants</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">I will actively seek and apply for grants, or assist in the process — researching funders, writing proposals, and managing submissions to bring in funding for conservation, infrastructure and community projects on the land.</p></div>
+        </div>
   </div>
 </section>
 
@@ -463,7 +463,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   <div class="content-inner">
     <p class="content-tag">Project</p>
     <h2 class="content-title">Black wattle clearing (RMB Fund income)</h2>
-    <img src="images/gallery/greenhouse.jpg" alt="Black wattle clearing" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
+    <img src="images/gallery/black-wattle.jpg" alt="Black wattle clearing" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Black wattle (Acacia mearnsii) is a Category 1b invasive alien plant in South Africa. Clearing it restores water catchments, protects biodiversity and can generate income — both from selling the harvested timber (firewood, charcoal, poles, tannin) and from conservation funding such as the RMB Fund, which directs 1% of net profit after tax to environment and conservation programmes.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-bottom:1rem">
       <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Timber sales (firewood, charcoal, poles, tannin bark), plus grants/contracts from the RMB Fund and Working for Water for clearing and follow-up treatment.</p></div>
@@ -489,6 +489,40 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
         <li>Compliance with the National Environmental Management: Biodiversity Act (invasive species lists) and water-use regulations.</li>
       </ul>
       <p style="font-size:.8rem;color:rgba(244,241,234,.35);margin-top:.8rem">Costs and processes are planning estimates — confirm current rates, permits and fund criteria with the RMB Fund and the Department of Forestry, Fisheries and the Environment before applying.</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="content-room alt" id="proj-biochar">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">Biochar production (off-grid)</h2>
+    <img src="images/gallery/greenhouse.jpg" alt="Biochar production" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
+    <p class="content-lede">Carbon-negative soil amendment made by pyrolysis of woody biomass in low-oxygen conditions. Improves water retention, nutrient holding and microbial life in degraded soils — and locks carbon away for centuries. Produced off-grid using a flame-cap (Kon-Tiki) kiln or TLUD stove.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-bottom:1rem">
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Soil amendment sales, carbon credits (future), compost enhancement, and farm productivity gains from healthier soil.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Approx. initial cost (1 module)</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">R 1 500 – R 5 000 (kiln materials, quench water, storage; often built from scrap)</p></div>
+    </div>
+    <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
+      <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Method (off-grid)</h3>
+      <ol style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+        <li>Gather dry woody biomass (&lt; 20% moisture); avoid treated wood and glossy paper.</li>
+        <li>Build or dig a flame-cap kiln (cone shape, wide top, narrow bottom).</li>
+        <li>Light a small fire at the bottom; continuously add biomass on top — the flame cap starves lower layers of oxygen (pyrolysis).</li>
+        <li>Quench with water when done; crush and charge with compost tea before soil use.</li>
+        <li>Store dry; biochar is hygroscopic.</li>
+      </ol>
+    </div>
+    <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem">
+      <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Requirements</h3>
+      <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+        <li>Dry feedstock supply (woody biomass, crop residues).</li>
+        <li>Safe burn site away from structures with firebreak.</li>
+        <li>Quench water on hand — hot biochar reignites easily.</li>
+        <li>Crusher or hammer for sizing; compost tea for charging.</li>
+      </ul>
+      <p style="font-size:.8rem;color:rgba(244,241,234,.35);margin-top:.8rem">Costs and processes are planning estimates — adapt to local conditions and regulations.</p>
     </div>
   </div>
 </section>
@@ -707,7 +741,8 @@ var cardData=[
   {name:'Adventure camp',img:'images/gallery/adventure.png',url:'#proj-adventure'},
   {name:'Workshops & events',img:'images/gallery/workshop.png',url:'#proj-workshops'},
   {name:'Sound journeys & retreats',img:'images/gallery/retreat.png',url:'#proj-retreats'},
-  {name:'Black wattle clearing',img:'images/gallery/greenhouse.jpg',url:'#proj-wattle'}
+  {name:'Black wattle clearing',img:'images/gallery/black-wattle.jpg',url:'#proj-wattle'},
+  {name:'Biochar production',img:'images/gallery/greenhouse.jpg',url:'#proj-biochar'}
 ];
 var $cardRing=document.getElementById('cardRing');
 // CYLINDER TILES (React Bits circular-carousel geometry): each card = 8 vertical
@@ -763,7 +798,13 @@ cardData.forEach(function(card){
     if(h.charAt(0)==='#'){
       e.preventDefault();
       var target=document.querySelector(h);
-      if(target){ target.scrollIntoView({behavior:'smooth',block:'start'}); }
+      if(target){
+        if(typeof lenis!=='undefined' && lenis.scrollTo){
+          lenis.scrollTo(target,{offset:0,duration:1.2});
+        } else {
+          target.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      }
     }
   });
   el.dataset.img=card.img||'';
@@ -1360,7 +1401,7 @@ function vpCache(){
       }else{add(el,fx);}
     }
   });
-  if(nameVPChars)for(var j=0;j<nameVPChars.length;j++)add(nameVPChars[j],vpIsFixed(nameVPChars[j]));
+  // (nameVPChars excluded from VP: they are driven by the scroll reveal animation)
 }
 
 // VP smoothing: target weights are the RAW cursor distance (compute() output),
@@ -1399,7 +1440,7 @@ function vpStep(){
 window.addEventListener('pointermove',function(ev){vpCursor.x=ev.clientX;vpCursor.y=ev.clientY;},{passive:true});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(vpCache);
 vpCache();
-gsap.ticker.add(vpStep);
+if(!mobilePortrait && !REDUCED) gsap.ticker.add(vpStep);
 // Positions go stale while hero text scrubs with the timeline or ring cards
 // glide in 3D — re-cache after the scroll settles (and on resize).
 if(lenis)lenis.on('scroll',vpCacheSoon);
