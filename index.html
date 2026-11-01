@@ -154,7 +154,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
 .gallery-floor.visible{opacity:1}
 
-.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:1360vh}
+.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:1600vh}
 @media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:80vh}.r4h{height:300vh}.r5h{height:10vh}.r6h{height:280vh}}
 
 @media(max-width:900px){
@@ -395,7 +395,7 @@ var viewW=window.innerWidth,viewH=window.innerHeight;
 // The lab panel writes here; every engine reads from here. Nothing is duplicated.
 var SITE={
   scroll:{lenisDuration:1.1,wheelMult:1,idleMs:700,cruiseSec:14},
-  gallery:{stiff:.05,damp:.64,gap:.85,cardK:1,reflect:.45,depth:1,
+  gallery:{stiff:.03,damp:.72,gap:.85,cardK:1,reflect:.45,depth:1,
     tilt:-5,perspective:2400,curve:1,stretch:.19,depthFade:.55,innerShade:.6,
     cornerRadius:12,parallax:.3,momentum:.6,snap:true,pauseOnHover:true,
     focusOnClick:true,draggable:true,autoplay:'drift',speed:14,interval:3,
