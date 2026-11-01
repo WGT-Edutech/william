@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self';">
+<link rel="icon" type="image/png" href="images/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="images/favicon-180.png?v=2">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#000000">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wgt-edutech.github.io/william/">
 <meta property="og:title" content="William Thomason — Regenerative Food Forest Planner">
@@ -15,15 +16,226 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <title>William Thomason — Regenerative Food Forest Planner</title>
-<link rel="icon" type="image/png" href="images/favicon-32.png">
-<link rel="apple-touch-icon" href="images/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 <script src="js/gsap.min.js"></script>
 <script src="js/ScrollTrigger.min.js"></script>
 <script src="js/lenis.min.js"></script>
-<link rel="stylesheet" href="style.css">
+<script src="js/lil-gui.min.js"></script>
+<script src="js/vp-engine.js"></script>
+<style>
+:root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5);--body-font:'Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+#scene{position:fixed;inset:0;z-index:2;pointer-events:none}
+.whale-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:1;
+  will-change:opacity}
+.whale-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform}
+.whale-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(2,8,6,.35) 0%,rgba(2,8,6,.45) 45%,rgba(2,8,6,.72) 100%);z-index:1}
+.room{position:relative}
+.sticky{position:sticky;top:0;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:10;will-change:transform}
+
+.name-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:6;opacity:0}
+/* Title + description slate: two glass boxes, left of the whale */
+.intro-slate{position:fixed;left:5vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1.3rem;z-index:6;opacity:0;width:min(54vw,660px);align-items:flex-start;pointer-events:none;will-change:transform,opacity}
+.quote-stage{position:fixed;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;opacity:0;pointer-events:none;will-change:opacity;text-align:center;padding:0 6vw}
+.quote-stage blockquote{font-family:'Roboto Flex',sans-serif;font-weight:500;font-style:italic;font-size:clamp(1.6rem,3.6vw,2.9rem);line-height:1.35;letter-spacing:.02em;color:var(--text-cream);max-width:min(78vw,900px);text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.quote-stage .quote-mark{font-family:Georgia,serif;font-size:clamp(3.4rem,7vw,5.6rem);line-height:0;color:var(--accent-coral);opacity:.9;transform:translateY(1.2rem)}
+.quote-stage cite{font-family:'Oswald',sans-serif;font-style:normal;font-size:clamp(.9rem,1.4vw,1.1rem);text-transform:uppercase;letter-spacing:.22em;color:rgba(244,241,234,.62)}
+.desc-line{position:fixed;left:5vw;top:calc(50% + 45px);z-index:6;opacity:0;pointer-events:none;will-change:transform,opacity;
+  font-family:'Roboto Flex',sans-serif;font-size:clamp(1.5rem,2.8vw,2.2rem);letter-spacing:.05em;line-height:1.3;
+  color:rgba(244,241,234,.92);max-width:min(70vw,860px);white-space:nowrap;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.slate-card{position:relative;padding:1.1rem 1.8rem;border-radius:18px;text-align:left;
+  background:rgba(5,12,9,.82);border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 14px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12)}
+#nameStage{background:transparent;border:0;box-shadow:none;padding:.4rem 0}
+#nameStage .name-text{font-size:clamp(2rem,6vw,4.5rem);white-space:nowrap;text-shadow:0 2px 24px rgba(0,0,0,.55),0 0 2px hsl(24 100% 72% / .8),0 0 6px hsl(24 100% 62% / .4)}
+.name-text{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.6rem,4.5vw,3rem);font-weight:700;color:var(--text-cream);text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px hsl(24 100% 72% / .8),0 0 4px hsl(24 100% 62% / .4)}
+.name-char{display:inline-block;opacity:0;transform:translateY(20px)}
+
+.title-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;z-index:6;opacity:0;transform:translateY(150px)}
+.title-reflect{transform:scaleY(-1);margin-top:2.2rem;
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
+  opacity:.55;filter:blur(1px)}
+
+#galleryRoom{position:absolute;inset:0;z-index:30;perspective:2400px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;cursor:grab}
+#galleryRoom.grabbing{cursor:grabbing}
+#r6 .sticky{overflow:visible}
+/* Cylinder camera (React Bits circular-carousel, cylinder preset): the ring sits
+   R back from the perspective plane (front card lands at z=0 = full size) and
+   the camera tilts down -5deg so the drum reads in 3D. */
+.card-ring{position:absolute;inset:0;display:flex;transform-style:preserve-3d;transform:translateZ(-510px) rotateX(-5deg)}
+/* Each card is a 0x0 anchor at the room centre; the render walks it around the
+   drum with rotateY(base) translateZ(R). Children are positioned vs. it. */
+.ring-card{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;cursor:grab}
+/* Tiles: 8 vertical slices per face bend around the cylinder (bend = radius,
+   alpha = centre/bend, shift = R·sin a, depth = −R·(1−cos a), turn = a). The
+   photo is never scaled — each tile clips one strip of the full image, so the
+   flat photo visibly wraps the drum. Back tiles are the 180°-flipped face,
+   darkened with .cc-inner, so the hollow ring reads through the gaps. */
+.ring-card-tiles{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d}
+.cc-tile{position:absolute;top:calc(-120px * var(--k,1));height:calc(240px * var(--k,1));overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cc-frame{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden}
+.cc-photo{position:absolute;top:0;height:calc(240px * var(--k,1));width:calc(360px * var(--k,1));display:block;max-width:none;object-fit:cover;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.cc-shade{position:absolute;inset:0;pointer-events:none;background:#000;opacity:var(--cc-depth,0)}
+.cc-inner{position:absolute;inset:0;pointer-events:none;background:#000;opacity:var(--cc-inner,.4)}
+/* Mobile fallback: the simple full-image front (kenburns) — tiles are desktop
+   only (hidden in the portrait media block below). */
+.ring-card-front{position:absolute;inset:0;display:none;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;background:#0a0a12}
+.ring-card-front img{animation:kenburns 22s ease-in-out infinite alternate;will-change:transform}
+@keyframes kenburns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.14) translate(-2.2%,-1.6%)}}
+.ring-card:nth-child(odd) .ring-card-front img{animation-duration:26s;animation-delay:-4s}
+.ring-card:nth-child(3n) .ring-card-front img{animation-duration:19s;animation-delay:-11s}
+@media(prefers-reduced-motion){.ring-card-front img{animation:none}}
+.ring-card-title{font-family:'Oswald',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream);text-align:center;line-height:1.2;text-shadow:0 0 1px hsl(24 100% 72% / .55);transform:translateZ(3px)}
+.ring-card-pill{position:absolute;top:calc(-120px * var(--k,1) - 1.02rem);left:50%;transform:translateX(-50%) translateZ(3px);z-index:5;white-space:nowrap;
+  font-family:'Oswald',sans-serif;font-size:1.26rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-cream);
+  background:rgba(5,12,9,.85);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.45em 1.4em;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transition:opacity .35s ease;pointer-events:none}
+.ring-card.focused .ring-card-pill{opacity:1}
+.ring-card:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+.ring-card-reflect{position:absolute;top:calc(120px * var(--k,1) + 84px);left:calc(-180px * var(--k,1));width:calc(360px * var(--k,1));height:calc(240px * var(--k,1));overflow:hidden;pointer-events:none;background:#000}
+.ring-card-reflect img{width:100%;height:100%;object-fit:cover;transform:scaleY(-1);opacity:var(--reflect-op,.45);-webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%)}
+
+.phase-dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.8rem}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(244,241,234,.2);border:1px solid rgba(244,241,234,.1);cursor:pointer;transition:all .3s;padding:0}
+.dot.active{background:radial-gradient(circle,rgba(200,170,255,.9) 20%,var(--purple) 55%,rgba(255,138,77,.3) 100%);border-color:var(--purple);box-shadow:none;transform:scale(1.3)}
+
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:7rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;height:7rem;background:#000;z-index:45;border-top:1px solid rgba(255,138,77,.18)}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:2.3rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
+.brand-mark{display:inline-block;height:3rem;width:auto;vertical-align:-0.3em;margin-right:.5rem}
+.nav-links{display:flex;align-items:center}
+.nav-links a{font-family:var(--body-font),sans-serif;font-size:1.7rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
+.nav-links a:hover{color:var(--purple)}
+.nav-links a.donate-link{color:var(--purple)!important}
+.menu-toggle{display:none}
+.nav-strip,.nav-motto{display:none}
+
+.section-buttons{position:fixed;bottom:calc((50vh - 140px) * 2 / 3);left:50%;transform:translateX(-50%);z-index:40;display:flex;gap:1rem;opacity:0;pointer-events:none;transition:opacity .6s}
+.section-buttons.visible{opacity:1;pointer-events:auto}
+
+/* ── CONTENT ROOMS (whale story, tour, donate, footer) ── */
+.content-room{position:relative;z-index:20;background:#000;padding:6rem 0;border-top:1px solid rgba(255,138,77,.15)}
+.content-room:first-of-type{border-top:0}
+.content-inner{max-width:1000px;margin:0 auto;padding:0 2rem}
+.content-tag{font-family:var(--body-font),sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem}
+.content-title{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);text-transform:uppercase;letter-spacing:.04em;color:var(--text-cream);margin-bottom:1.5rem}
+.content-body{max-width:720px;font-size:1.02rem;color:var(--text-dim);display:flex;flex-direction:column;gap:1rem}
+.content-body strong{color:var(--text-cream)}
+.content-cta{color:var(--text-cream);font-weight:500}
+.content-cta a{color:var(--purple);text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)}
+.content-lede{max-width:640px;color:var(--text-dim);margin-bottom:2rem}
+.tour-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.tour-card{background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:.6rem}
+.tour-date{font-family:var(--body-font),sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
+.tour-card h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream)}
+.tour-card p{font-size:.9rem;color:var(--text-dim);flex:1}
+.tour-card a{color:var(--purple);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.04em}
+.tour-card a:hover{text-decoration:underline}
+.tour-soon{border-style:dashed}
+.donate-grid{display:flex;flex-wrap:wrap;gap:.7rem}
+.donate-chip{font-family:var(--body-font),sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.04em;color:var(--text-cream);background:rgba(255,138,77,.12);border:1px solid rgba(255,138,77,.35);border-radius:999px;padding:.55em 1.3em;cursor:pointer;transition:all .25s}
+.donate-chip:hover{background:rgba(255,138,77,.25);transform:translateY(-1px)}
+.donate-chip.crypto{border-color:rgba(244,241,234,.22);background:rgba(255,255,255,.05)}
+.donate-note{margin-top:1.4rem;font-size:.85rem;color:var(--text-dim)}
+.sect-btn{display:inline-block;padding:.6em 1.8em;border-radius:999px;font-family:var(--body-font),sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.05em;text-decoration:none;color:var(--text-cream);text-shadow:0 0 1px hsl(24 100% 72% / .45);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:all .3s}
+.sect-btn:hover{background:rgba(255,138,77,.2);border-color:rgba(255,138,77,.4);transform:translateY(-2px)}
+.donate-btn{background:var(--purple);border-color:var(--purple);box-shadow:0 0 4px rgba(255,170,110,.35)}
+.donate-btn:hover{background:rgba(255,138,77,.8);box-shadow:0 0 4px rgba(255,170,110,.5)}
+
+.slogan-bar{position:fixed;bottom:calc((50vh - 140px) / 3 - 150px);left:0;right:0;z-index:50;text-align:center;padding:1.5rem 2rem;font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--text-cream);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .6s;text-shadow:0 0 2px hsl(24 100% 72% / .5)}
+.slogan-bar.visible{opacity:1;transition:opacity 7s}
+
+.gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
+.gallery-floor.visible{opacity:1}
+
+.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:1360vh}
+@media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:80vh}.r4h{height:300vh}.r5h{height:10vh}.r6h{height:280vh}}
+
+@media(max-width:900px){
+  .top-nav{padding:0 1rem}
+  .nav-links{display:none}
+  .menu-toggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:80px;height:80px;padding:0;background:none;border:0;cursor:pointer;-webkit-appearance:none}
+  .menu-toggle span{display:block;width:22px;height:2px;background:var(--text-cream);border-radius:2px;transition:transform .3s ease,opacity .3s ease}
+  .menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu-toggle.open span:nth-child(2){opacity:0}
+  .menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+@media(orientation:portrait){
+  .name-text{line-height:1.12;text-align:center}
+  #nameStage .name-text{white-space:nowrap;font-size:clamp(1.2rem,5vw,2rem)}
+  .name-text .name-space{display:inline}
+  .intro-slate{left:50%;top:20vh;transform:translateX(-50%);width:min(92vw,660px);align-items:center;text-align:center}
+  .desc-line{left:50%;top:calc(32vh - 65px);transform:translateX(-50%);text-align:center;max-width:94vw;white-space:nowrap;font-size:clamp(.95rem,4.2vw,1.3rem)}
+}
+@media(max-width:900px) and (orientation:portrait){
+  .r6h{height:60vh}
+  #galleryRoom{perspective:none;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain}
+  #galleryRoom::-webkit-scrollbar{display:none}
+  .card-ring{position:relative;inset:auto;transform:none;width:max-content;min-width:100%;height:100%;flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;transform-style:flat;padding:0 10vw}
+  .ring-card-tiles{display:none}
+  .ring-card-front{display:flex}
+  .ring-card-pill{top:-1.02rem}
+  .ring-card{position:relative;left:auto;top:auto;width:80vw;height:53vw;max-width:240px;max-height:162px;margin:0;flex:0 0 auto;scroll-snap-align:center;scroll-snap-stop:always;transform:none!important;opacity:1!important;pointer-events:auto!important;z-index:auto!important}
+  .ring-card-reflect{display:none}
+}
+.menu-backdrop{position:fixed;top:7rem;left:0;right:0;bottom:0;z-index:104;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s}
+.menu-backdrop.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease,visibility 0s}
+.mobile-menu{position:fixed;top:7rem;right:0;bottom:0;width:min(280px,80vw);z-index:110;display:flex;flex-direction:column;gap:1.1rem;padding:2.2rem 1.8rem;background:rgba(10,10,20,.94);backdrop-filter:blur(14px);border-left:1px solid rgba(255,138,77,.25);box-shadow:-10px 0 40px rgba(0,0,0,.5);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:transform .35s ease,visibility 0s .35s}
+.mobile-menu.open{transform:translateX(0);visibility:visible;pointer-events:auto;transition:transform .35s ease,visibility 0s}
+.mobile-menu a{font-family:var(--body-font),sans-serif;font-size:1rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:rgba(244,241,234,.9);padding:.6rem .4rem;border-bottom:1px solid rgba(255,255,255,.06);transition:color .3s,text-shadow .3s}
+.mobile-menu a:hover{color:var(--purple);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
+.mobile-menu a.donate-link{color:var(--purple)}
+
+.loading-screen{display:flex;flex-direction:column;align-items:center;gap:1.5rem;position:relative}
+.hero-stencil{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);height:min(78vh,640px);opacity:.5;pointer-events:none;z-index:0;filter:blur(0.5px)}
+
+.landscape-overlay{display:none}
+@media(max-width:768px) and (orientation:portrait){
+  .landscape-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;text-align:center;padding:2rem}
+  .landscape-overlay .lo-icon{font-size:3rem;animation:loRotate 2s ease-in-out infinite}
+  @keyframes loRotate{0%,20%{transform:rotate(0deg)}60%,100%{transform:rotate(90deg)}}
+  .landscape-overlay h2{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
+  .landscape-overlay p{font-family:var(--body-font),sans-serif;font-size:.9rem;color:var(--text-dim);max-width:320px;line-height:1.6}
+  .landscape-overlay .lo-btn{padding:.7em 2em;border-radius:999px;border:1px solid rgba(255,138,77,.4);background:rgba(255,138,77,.15);color:var(--text-cream);font-family:var(--body-font),sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .landscape-overlay .lo-btn:hover{background:rgba(255,138,77,.3);box-shadow:0 0 8px rgba(255,138,77,.3)}
+}
+@media(prefers-reduced-motion){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== room + lab colour tokens (orbit room removed) ===== */
+:root{
+  --teal-deep:#04211f; --teal:#0f766e; --teal-bright:#14b8a6;
+  --aqua:#6ee7d8; --aqua-bright:#a7f3ec;
+  --reflect-op:.45;
+}
+
+/* ===== ANIMATION LAB PANEL ===== */
+#labToggle{position:fixed;right:1.1rem;bottom:1.1rem;z-index:120;width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--aqua);background:rgba(4,33,31,.88);color:var(--aqua-bright);
+  font:600 12px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.1em;cursor:pointer;
+  box-shadow:0 0 18px rgba(110,231,216,.25);display:block;-webkit-appearance:none}
+#labToggle:hover{background:rgba(15,118,110,.55)}
+#labToggle:focus-visible{outline:2px solid var(--aqua-bright);outline-offset:2px}
+.lil-gui{--width:300px;--name-width:46%;--background-color:rgba(4,26,25,.94);--text-color:#d7f5f0;
+  --title-background-color:rgba(15,118,110,.55);--widget-color:rgba(110,231,216,.20);
+  --hover-color:rgba(110,231,216,.30);--focus-color:rgba(110,231,216,.42);
+  --number-color:#8ff0e2;--string-color:#8ff0e2;--font-family:ui-monospace,Menlo,Consolas,monospace;
+  z-index:121!important}
+/* CRITICAL: folders ALSO carry the .lil-gui class — position must be scoped to
+   .lil-gui.lil-root only, or every folder gets torn out of flow and pinned to
+   the same corner, stacking all rows on top of each other. */
+.lil-gui.lil-root{position:fixed;top:auto;right:1.1rem;bottom:4.5rem;left:auto;
+  max-height:calc(100vh - 6rem);overflow-y:auto}
+.lil-gui.lil-root>.lil-title{letter-spacing:.06em;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:768px){.lil-gui{--width:min(300px,86vw)}
+  .lil-gui.lil-root{right:.7rem;bottom:4.2rem}}
+</style>
 </head>
 <body>
 
@@ -34,12 +246,10 @@
   <button class="lo-btn" id="loOkBtn">OK</button>
 </div>
 
-<div class="hero-bg" id="heroBg" aria-hidden="true">
-  <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="images/hero-poster.jpg"
-         disablePictureInPicture>
+<div class="whale-bg" id="whaleWrap" aria-hidden="true">
+  <video id="whaleVid" autoplay muted loop playsinline preload="auto" poster="images/hero-poster.jpg">
     <source src="images/hero-loop.mp4" type="video/mp4">
   </video>
-  <div class="hero-scrim"></div>
 </div>
 
 <section class="room r1h" id="r1"><div class="sticky"></div></section>
@@ -62,18 +272,20 @@
 <section class="room r5h" id="r5"><div class="sticky"></div></section>
 <section class="room r6h" id="r6">
   <div class="sticky">
-    <section id="galleryRoom"><div class="gallery-grid" id="galleryGrid"></div></section>
+    <section id="galleryRoom" data-lenis-prevent><div class="card-ring" id="cardRing"></div></section>
   </div>
 </section>
 
+
+<!-- ===== ISIKHOVA CONTENT ROOMS ===== -->
 <section class="content-room" id="about">
   <div class="content-inner">
     <p class="content-tag">What I bring to Isikhova</p>
     <h2 class="content-title">Nine years growing food without poison, plus the crafts to build a community</h2>
     <p class="content-lede">I'm William Thomason — a Regenerative Food Forest Planner who has spent nine years designing poison-free growing systems (aquaponics, syntropic permaculture, hugel beds). I'm looking to bring that experience to Isikhova, alongside the other work I do: building infrastructure and tree-walkways / treehouses, running adventure-camp setups and workshops &amp; events, designing in Blender, producing sound journeys and retreats, and handling web development and social-media / PR quality control.</p>
-    <div class="grid g2">
-      <div class="card"><h3>The Term</h3><p>The term: a share in event proceeds and product sales, negotiated per project. I'm not asking for a salary — I have my own income, solar and internet — and I take on fixed work on the land in exchange for accommodation and the right to be here, earning a negotiated share of the proceeds from events and product sales I bring to market.</p></div>
-      <div class="card"><h3>The Goal</h3><p>A garden that feeds people and improves itself: stronger each year, poisons never, soil that breathes under a seven-layer food forest.</p></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Term</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">A share in event proceeds and product sales, negotiated per project. I'm not asking for a salary — I have my own income, solar and internet — and I take on fixed work on the land in exchange for accommodation and the right to be here, earning a negotiated share of the proceeds from events and product sales I bring to market.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Goal</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">A garden that feeds people and improves itself: stronger each year, poisons never, soil that breathes under a seven-layer food forest.</p></div>
     </div>
   </div>
 </section>
@@ -83,77 +295,28 @@
     <p class="content-tag">Curriculum Vitae</p>
     <h2 class="content-title">Regenerative Food Forest Planner</h2>
     <p class="content-lede">Prepared for an off-grid lifestyle community — Isikhova &amp; Ironwood, Swellendam.</p>
-    <div class="grid g4 stats">
-      <div class="stat-card"><span class="stat">9</span><span class="statlbl">Years growing</span></div>
-      <div class="stat-card"><span class="stat">0</span><span class="statlbl">Synthetic pesticides</span></div>
-      <div class="stat-card"><span class="stat">7</span><span class="statlbl">Forest layers</span></div>
-      <div class="stat-card"><span class="stat">365</span><span class="statlbl">Day operating plan</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1rem;margin-bottom:1.5rem">
+      <div style="text-align:center;padding:1rem;border:1px solid rgba(255,138,77,.2);border-radius:12px"><span style="font-family:'Oswald',sans-serif;font-size:2rem;color:#ff8a4d;display:block">9</span><span style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(244,241,234,.5)">Years growing</span></div>
+      <div style="text-align:center;padding:1rem;border:1px solid rgba(255,138,77,.2);border-radius:12px"><span style="font-family:'Oswald',sans-serif;font-size:2rem;color:#ff8a4d;display:block">0</span><span style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(244,241,234,.5)">Synthetic pesticides</span></div>
+      <div style="text-align:center;padding:1rem;border:1px solid rgba(255,138,77,.2);border-radius:12px"><span style="font-family:'Oswald',sans-serif;font-size:2rem;color:#ff8a4d;display:block">7</span><span style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(244,241,234,.5)">Forest layers</span></div>
+      <div style="text-align:center;padding:1rem;border:1px solid rgba(255,138,77,.2);border-radius:12px"><span style="font-family:'Oswald',sans-serif;font-size:2rem;color:#ff8a4d;display:block">365</span><span style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(244,241,234,.5)">Day operating plan</span></div>
     </div>
-    <div class="card" style="margin-top:1.25rem">
-      <h3>Systems Under Management</h3>
-      <p style="margin-bottom:.5rem">
-        <span class="tag">Aquaponics</span><span class="tag">Hydroponics</span><span class="tag">Permaculture</span>
-        <span class="tag">Syntropic farming</span><span class="tag">Jadam / KNF</span><span class="tag">Hugelkultur</span>
-        <span class="tag">Food forest design</span><span class="tag">Vermiculture</span><span class="tag">Compost</span>
-        <span class="tag">Seed saving</span><span class="tag">Pollinator habitat</span><span class="tag">Volunteer training</span>
-      </p>
+    <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
+      <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Systems Under Management</h3>
+      <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Aquaponics · Hydroponics · Permaculture · Syntropic farming · Jadam / KNF · Hugelkultur · Food forest design · Vermiculture · Compost · Seed saving · Pollinator habitat · Volunteer training</p>
     </div>
-    <div class="grid g2" style="margin-top:1.25rem">
-      <div class="card"><h3>Five Operating Principles</h3><ul>
-        <li><strong>Stratification</strong> — vertical layers by light demand</li>
-        <li><strong>Succession</strong> — placenta toward climax, always handing on</li>
-        <li><strong>Density</strong> — capture every photon, no bare soil</li>
-        <li><strong>Diversity</strong> — many species, many life cycles</li>
-        <li><strong>Disturbance</strong> — pruning as managed, deliberate disturbance</li>
-      </ul></div>
-      <div class="card"><h3>What I Build</h3><ul>
-        <li>Worm farms &mdash; vermiculture and aerated worm tea</li>
-        <li>Hot compost in correct layers: food, green, brown, biochar</li>
-        <li>Lactobacillus cultures, fermented plant juice, biochar &amp; rock dust</li>
-        <li>Continuous living cover &mdash; soil is never left bare</li>
-      </ul></div>
-    </div>
-    <div class="card" style="margin-top:1.25rem">
-      <p><strong>Rule:</strong> prune no more than 30% of any plant in one pass, and prune weekly. The prunings are the mulch &mdash; the system feeds itself. I wrote the plan, built it, and ran it.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Five Operating Principles</h3><ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem"><li>Stratification — vertical layers by light demand</li><li>Succession — placenta toward climax, always handing on</li><li>Density — capture every photon, no bare soil</li><li>Diversity — many species, many life cycles</li><li>Disturbance — pruning as managed, deliberate disturbance</li></ul></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">What I Build</h3><ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem"><li>Worm farms — vermiculture and aerated worm tea</li><li>Hot compost in correct layers: food, green, brown, biochar</li><li>Lactobacillus cultures, fermented plant juice, biochar &amp; rock dust</li><li>Continuous living cover — soil is never left bare</li></ul></div>
     </div>
   </div>
 </section>
 
-<section class="content-room" id="gallery">
+<section class="content-room" id="projects">
   <div class="content-inner">
     <p class="content-tag">Projects</p>
     <h2 class="content-title">Work I can bring to the farm</h2>
     <p class="content-lede">Below are the areas I want to contribute at Isikhova — from the food forest and aquaponics I already run, to the adventure camp, tree-walkways and digital craft on the horizon.</p>
-    <div class="gallery-grid">
-      <a class="gallery-card" href="#about" data-label="Food forest">
-        <img src="images/gallery/food-forest.png" alt="Seven-layer food forest" loading="lazy" decoding="async">
-        <span class="gallery-label">Food forest creation</span>
-      </a>
-      <a class="gallery-card" href="#about" data-label="Aquaponics">
-        <img src="images/gallery/aquaponics.png" alt="Aquaponics system" loading="lazy" decoding="async">
-        <span class="gallery-label">Aquaponics &amp; water</span>
-      </a>
-      <a class="gallery-card" href="#about" data-label="Treehouse">
-        <img src="images/gallery/treehouse.png" alt="Tree walkway and treehouse" loading="lazy" decoding="async">
-        <span class="gallery-label">Tree walkway &amp; treehouses</span>
-      </a>
-      <a class="gallery-card" href="#about" data-label="Construction">
-        <img src="images/gallery/construction.png" alt="Natural building and infrastructure" loading="lazy" decoding="async">
-        <span class="gallery-label">Construction &amp; infrastructure</span>
-      </a>
-      <a class="gallery-card" href="#about" data-label="Adventure">
-        <img src="images/gallery/adventure.png" alt="Adventure camp setup" loading="lazy" decoding="async">
-        <span class="gallery-label">Adventure camp</span>
-      </a>
-      <a class="gallery-card" href="#about" data-label="Workshops">
-        <img src="images/gallery/workshop.png" alt="Outdoor workshop and events" loading="lazy" decoding="async">
-        <span class="gallery-label">Workshops &amp; events</span>
-      </a>
-      <a class="gallery-card" href="#about" data-label="Retreats">
-        <img src="images/gallery/retreat.png" alt="Sound journey retreat" loading="lazy" decoding="async">
-        <span class="gallery-label">Sound journeys &amp; retreats</span>
-      </a>
-    </div>
   </div>
 </section>
 
@@ -162,36 +325,1054 @@
     <p class="content-tag">Isikhova</p>
     <h2 class="content-title">A place to grow, and to give back</h2>
     <p class="content-lede">Isikhova &amp; Ironwood aims to live self-sufficiently and in harmony with Nature, breathing fresh mountain air in the Langeberg. That is exactly the conditions my work is built for.</p>
-    <div class="grid g2">
-      <div class="card"><h3>Why I fit here</h3><ul>
-        <li>Living soil, native pollinators and layered plantings reinforce the mountain veld instead of fighting it.</li>
-        <li>Adventure-camp build, tree-walkways and retreat facilitation turn conservation into income, not cost.</li>
-      </ul></div>
-      <div class="card"><h3>Let's talk</h3><p>I can be on the land within weeks &mdash; I have my own income, solar and internet. If this resonates, reach out through the Isikhova community page to arrange a conversation about how I can contribute to the next season.</p>
-        <p><a class="content-cta" href="https://www.facebook.com/profile.php?id=100066618686660" target="_blank" rel="noopener">Connect via the Isikhova page &rarr;</a></p>
-      </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Why I fit here</h3><ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem"><li>Living soil, native pollinators and layered plantings reinforce the mountain veld instead of fighting it.</li><li>Adventure-camp build, tree-walkways and retreat facilitation turn conservation into income, not cost.</li></ul></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Let's talk</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">I can be on the land within weeks — I have my own income, solar and internet. If this resonates, reach out through the Isikhova community page to arrange a conversation about how I can contribute to the next season.</p><p style="margin-top:.8rem"><a href="https://www.facebook.com/profile.php?id=100066618686660" target="_blank" rel="noopener" style="color:#ff8a4d;text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)">Connect via the Isikhova page →</a></p></div>
     </div>
   </div>
 </section>
 
-<footer class="site-footer">
-  <span>William Thomason &mdash; Regenerative Food Forest Planner</span>
+<footer style="text-align:center;padding:2rem;color:rgba(244,241,234,.4);font-size:.8rem;border-top:1px solid rgba(255,138,77,.15)">
+  <span>William Thomason — Regenerative Food Forest Planner</span><br>
   <span>Isikhova &amp; Ironwood, Swellendam</span>
 </footer>
 
-<nav class="bottom-bar" aria-label="Section navigation">
+<nav class="top-nav" id="topNav">
+  <span class="nav-brand">William Thomason</span>
+  <span class="nav-links">
+    <a href="#about">About</a>
+    <a href="#cv">CV</a>
+    <a href="#projects">Projects</a>
+    <a href="#connect" class="donate-link">Connect</a>
+  </span>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+</nav>
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile menu">
   <a href="#about">About</a>
   <a href="#cv">CV</a>
-  <a href="#gallery">Projects</a>
-  <a href="#connect">Connect</a>
+  <a href="#projects">Projects</a>
+  <a href="#connect" class="donate-link">Connect</a>
 </nav>
+<div class="slogan-bar" id="sloganBar">Regenerative Food Forest Planner — for Isikhova &amp; Ironwood.</div>
+<div class="gallery-floor" id="galleryFloor"></div>
 <div class="section-buttons" id="sectionButtons">
   <a href="#about" class="sect-btn">About</a>
   <a href="#cv" class="sect-btn">CV</a>
-  <a href="#gallery" class="sect-btn">Projects</a>
-  <a href="#connect" class="sect-btn">Connect</a>
+  <a href="#projects" class="sect-btn">Projects</a>
+  <a href="#connect" class="sect-btn donate-btn">Connect</a>
 </div>
 
-<script src="script.js"></script>
+<nav class="phase-dots" id="phaseDots" aria-label="Phase navigation">
+  <button class="dot active" data-room="r1" aria-label="Dot background"></button>
+  <button class="dot" data-room="r2" aria-label="Particle ring"></button>
+  <button class="dot" data-room="r3" aria-label="Name reveal"></button>
+  <button class="dot" data-room="r4" aria-label="Title and slogan"></button>
+  <button class="dot" data-room="r5" aria-label="Cursor effects"></button>
+    <button class="dot" data-room="r6" aria-label="Gallery"></button>
+  </nav>
+<button id="labToggle" aria-expanded="false" aria-controls="labHost" title="Animation lab">lab</button>
+<div id="labHost"></div>
+
+<script>
+(function(){
+'use strict';
+
+// Refresh must ALWAYS land on room 1 (the whale intro). The browser would
+// otherwise restore the previous scroll position, and Lenis would re-sync to
+// it — so kill scroll restoration BEFORE any engine initialises.
+// Also strip any #hash: a hash target would make the browser jump AFTER this
+// script and override the reset.
+if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+if(location.hash) history.replaceState(null, '', location.pathname + location.search);
+
+var clamp01=function(v){return Math.max(0,Math.min(1,v));};
+var DPR=Math.min(window.devicePixelRatio||1,2);
+var viewW=window.innerWidth,viewH=window.innerHeight;
+
+// ── SITE PARAMS — one source of truth, driven live by the animation lab ──
+// The lab panel writes here; every engine reads from here. Nothing is duplicated.
+var SITE={
+  scroll:{lenisDuration:1.1,wheelMult:1,idleMs:700,cruiseSec:14},
+  gallery:{stiff:.05,damp:.64,gap:.85,cardK:1,reflect:.45,depth:1,
+    tilt:-5,perspective:2400,curve:1,stretch:.19,depthFade:.55,innerShade:.6,
+    cornerRadius:12,parallax:.3,momentum:.6,snap:true,pauseOnHover:true,
+    focusOnClick:true,draggable:true,autoplay:'drift',speed:14,interval:3,
+    direction:'left',intro:'rise',captions:false},
+  vp:{radius:260,swing:.35,strength:1,family:'Inter',text:'#f4f1ea',accent:'#ff8a4d'}
+};
+var DEFAULTS=JSON.parse(JSON.stringify(SITE));
+// Saved lab settings (Save to site) apply on EVERY load — no sliders needed.
+// Loaded before the engine reads SITE so constants/render pick them up; an
+// explicit ?cfg= share link still wins (it merges later, on top).
+try{
+  var _labCfg=localStorage.getItem('will.labcfg');
+  if(_labCfg){var _labObj=JSON.parse(_labCfg);if(_labObj&&typeof _labObj==='object')deepMerge(SITE,_labObj);}
+}catch(e){}
+
+// Card scale: viewport-derived base, multiplied by the lab's cardK control.
+function computeCardK(){
+  return Math.min(1.35,Math.max(1,window.innerWidth/1280))*SITE.gallery.cardK;
+}
+
+// Rooms are read from the DOM in document order, so inserting a room never
+// re-indexes the engine: the gallery is r6.
+var rooms=Array.prototype.slice.call(document.querySelectorAll('.room'));
+var roomData=rooms.map(function(el){return{el:el,progress:0,top:0,height:0};});
+
+// The gallery room is looked up BY ID, not by a magic index.
+var galRoomEl=document.getElementById('r6');
+var galRoomData=null;
+
+function cacheRooms(){
+  roomData.forEach(function(r){
+    var rect=r.el.getBoundingClientRect();
+    r.top=rect.top+window.scrollY;
+    r.height=rect.height;
+  });
+  galRoomData=roomData.filter(function(r){return r.el===galRoomEl;})[0]||null;
+}
+cacheRooms();
+var cardK = computeCardK();
+document.documentElement.style.setProperty('--k', cardK);
+window.addEventListener('resize',function(){
+  viewW=window.innerWidth;viewH=window.innerHeight;cacheRooms();
+  if(typeof vpCache==='function')vpCache();   // rects are layout-derived
+  cardK=computeCardK();
+  document.documentElement.style.setProperty('--k',cardK);
+  mobilePortrait=window.innerWidth<=900&&window.innerHeight>window.innerWidth;
+});
+
+// ── WHALE VIDEO BACKGROUND (buttery 30fps loop + scroll scrub) ──
+var whaleWrap=document.getElementById('whaleWrap');
+var whaleVid=document.getElementById('whaleVid');
+whaleVid.playbackRate=0.75;   // calmer glide (Safari ignores the attribute)
+var vidReady=false;
+function tryPlay(){
+  if(vidReady||!whaleVid)return;
+  if(whaleVid.readyState>=2){
+    vidReady=true;
+    whaleVid.play().catch(function(){});
+  }
+}
+if(whaleVid){
+  whaleVid.addEventListener('canplay',tryPlay);
+  whaleVid.addEventListener('loadeddata',tryPlay);
+}
+window.addEventListener('pointerdown',tryPlay,{passive:true});
+window.addEventListener('keydown',tryPlay,{passive:true});
+
+// ── TEXT EFFECTS ──
+var nameText=document.getElementById('nameText'),nameStage=document.getElementById('nameStage');
+
+function splitToChars(el,cls){
+  var text=el.textContent;el.textContent='';
+  var chars=[];
+  text.split('').forEach(function(ch){
+    var s=document.createElement('span');
+    if(ch===' '&&cls!=='name-char'){s.className=cls;s.textContent=ch;s.style.display='inline';}
+    else{s.className=cls+(ch===' '?' name-space':'');s.textContent=ch===' '?'\u00a0':ch;}
+    el.appendChild(s);chars.push(s);
+  });
+  return chars;
+}
+var nameVPChars=splitToChars(nameText,'name-char');
+var nameRevealCount=0;
+
+var TITLE_PAD=40;
+function fitName(){
+  if(!nameText)return;
+  nameText.style.fontSize='';
+  var avail=viewW-TITLE_PAD*2;
+  var w=nameText.scrollWidth;
+  if(w>avail&&w>0){
+    var cur=parseFloat(getComputedStyle(nameText).fontSize);
+    nameText.style.fontSize=(cur*avail/w)+'px';
+  }
+}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitName);else fitName();
+window.addEventListener('resize',fitName);
+
+function revealNameChars(count){
+  nameVPChars.forEach(function(c,i){
+    c.style.opacity=i<count?'1':'0';
+    c.style.transform=i<count?'translateY(0)':'translateY(20px)';
+  });
+}
+// ── GALLERY CARDS ──
+var cardData=[
+  {name:'Food forest creation',img:'images/gallery/food-forest.png',url:'#about'},
+  {name:'Aquaponics & water',img:'images/gallery/aquaponics.png',url:'#about'},
+  {name:'Tree walkway & treehouses',img:'images/gallery/treehouse.png',url:'#about'},
+  {name:'Construction & infrastructure',img:'images/gallery/construction.png',url:'#about'},
+  {name:'Adventure camp',img:'images/gallery/adventure.png',url:'#about'},
+  {name:'Workshops & events',img:'images/gallery/workshop.png',url:'#about'},
+  {name:'Sound journeys & retreats',img:'images/gallery/retreat.png',url:'#connect'}
+];
+var $cardRing=document.getElementById('cardRing');
+// CYLINDER TILES (React Bits circular-carousel geometry): each card = 8 vertical
+// slices per face bending around the drum (bend = radius). The photo is never
+// scaled — every tile clips one strip of the full image, so the flat photo
+// appears to wrap the cylinder. Back faces are the 180°-flipped face darkened
+// with .cc-inner, so the hollow ring reads through the gaps between cards.
+var TILES=8, OVERLAP=2.5;
+function ccRadius(){
+  var along=360*cardK;
+  var pitch=along+30*(SITE.gallery.gap/0.85);
+  // cardData.length, NOT a live DOM count: the builder calls this while cards
+  // are still being appended, so a DOM count would be 0..7 mid-loop and every
+  // card would get different (or NaN) tile geometry.
+  var n=cardData.length;
+  return Math.max(pitch/(2*Math.sin(Math.PI/n)),along*0.6);
+}
+function ccTiles(back,img){
+  var along=360*cardK,length=along/TILES;
+  var R=ccRadius();
+  var curve=Math.max(0.001,SITE.gallery.curve);   // 0 = flat cards, 1 = full wrap
+  var bend=R/curve;
+  var html='',rad=SITE.gallery.cornerRadius;
+  for(var i=0;i<TILES;i++){
+    var start=i*length-(i>0?OVERLAP/2:0);
+    var end=(i+1)*length+(i<TILES-1?OVERLAP/2:0);
+    var center=(end+start)/2-along/2;
+    var alpha=center/bend;
+    var shift=bend*Math.sin(alpha);
+    var depth=-(bend*(1-Math.cos(alpha)));
+    var turn=alpha*180/Math.PI;
+    var size=end-start;
+    var off=back?along-end:start;
+    var first=i===0,last=i===TILES-1;
+    var br=(first?rad:0)+'px '+(last?rad:0)+'px '+(last?rad:0)+'px '+(first?rad:0)+'px';
+    var move='translate3d('+shift.toFixed(2)+'px,0px,'+depth.toFixed(2)+'px) rotateY('+turn.toFixed(2)+'deg)'+(back?' rotateY(180deg)':'');
+    html+='<div class="cc-tile" style="left:'+(-size/2).toFixed(2)+'px;width:'+size.toFixed(2)+'px;border-radius:'+br+';transform:'+move+'">'
+        +'<div class="cc-frame"><img class="cc-photo" src="'+img+'" alt="" decoding="async" draggable="false" style="left:'+(-off).toFixed(2)+'px">'
+        +(back?'<div class="cc-inner"></div>':'')+'<div class="cc-shade"></div></div></div>';
+  }
+  return html;
+}
+cardData.forEach(function(card){
+  // REAL LINKS, not clickable divs (a11y): keyboard activation, screen readers,
+  // middle-click and copy-link all work. CSS and the engine treat <a> identically.
+  var el=document.createElement('a');el.className='ring-card';
+  el.href=card.url||'/';el.target='_blank';el.rel='noopener';
+  el.setAttribute('aria-label','Open '+card.name);
+  el.dataset.img=card.img||'';
+  var front=card.img
+      ?'<img src="'+card.img+'" alt="'+card.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px">'
+      :'<span class="ring-card-title">'+card.name+'</span>';
+  var tiles=card.img?'<div class="ring-card-tiles" aria-hidden="true">'+ccTiles(false,card.img)+ccTiles(true,card.img)+'</div>':'';
+  var reflect=card.img?'<div class="ring-card-reflect" aria-hidden="true"><img src="'+card.img+'" alt=""></div>':'';
+  el.innerHTML='<div class="ring-card-front">'+front+'</div>'+tiles+reflect+'<div class="ring-card-pill">'+card.name+'</div>';
+  // No per-card spring state: the ring is driven by a single focus scalar (see
+  // GALLERY ENGINE below), so cards cannot drift out of alignment.
+  $cardRing.appendChild(el);
+});
+// Re-slice the tiles when the lab's Card size / Card gap changes.
+function rebuildTiles(){
+  if(mobilePortrait)return;
+  var cards=document.querySelectorAll('.ring-card');
+  for(var i=0;i<cards.length;i++){
+    var el=cards[i],img=el.dataset.img;
+    if(!img)continue;
+    var t=el.querySelector('.ring-card-tiles');
+    if(!t){t=document.createElement('div');t.className='ring-card-tiles';t.setAttribute('aria-hidden','true');
+      el.insertBefore(t,el.querySelector('.ring-card-reflect')||el.lastChild);}
+    t.innerHTML=ccTiles(false,img)+ccTiles(true,img);
+  }
+}
+
+// ── PHASE DOTS ──
+var dots=document.querySelectorAll('.phase-dots .dot');
+dots.forEach(function(dot){
+  dot.addEventListener('click',function(){
+    var el=document.getElementById(this.getAttribute('data-room'));
+    if(typeof lenis!=='undefined'&&lenis){
+      lenis.scrollTo(window.scrollY,{immediate:true});   // resync Lenis first
+      lenis.scrollTo(el.offsetTop,{duration:1.2});
+    }else{
+      el.scrollIntoView({behavior:'smooth'});
+    }
+  });
+});
+
+// ── MOBILE MENU ──
+var menuToggle=document.getElementById('menuToggle'),mobileMenu=document.getElementById('mobileMenu'),menuBackdrop=document.getElementById('menuBackdrop');
+function setMenu(open){
+  mobileMenu.classList.toggle('open',open);
+  menuBackdrop.classList.toggle('open',open);
+  menuToggle.classList.toggle('open',open);
+  menuToggle.setAttribute('aria-expanded',open?'true':'false');
+}
+if(menuToggle){
+  menuToggle.addEventListener('click',function(){setMenu(!mobileMenu.classList.contains('open'));});
+  menuBackdrop.addEventListener('click',function(){setMenu(false);});
+  mobileMenu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false);});
+}
+
+// ── DONATE PLACEHOLDERS ──
+var donateNote=document.getElementById('donateNote');
+document.querySelectorAll('.donate-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    donateNote.textContent=chip.dataset.donate+' is being set up — payment links and wallet addresses will appear here at launch. Follow @margreenie for the announcement.';
+    donateNote.style.color='var(--purple)';
+  });
+});
+
+// ── LANDSCAPE PROMPT ──
+var landscapeOverlay=document.getElementById('landscapeOverlay');
+var loDismissed=false;
+// Persist the dismissal: repeat visitors should not re-dismiss the rotate gate
+// on every visit. try/catch guards privacy modes where localStorage throws.
+try{ loDismissed=localStorage.getItem('will-lo')==='1'; }catch(e){}
+function checkOrientation(){
+  var portraitPhone=window.innerHeight>window.innerWidth&&window.innerWidth<=900;
+  var showOverlay=window.innerHeight>window.innerWidth&&window.innerWidth<=768;
+  if(!showOverlay)loDismissed=false;
+  landscapeOverlay.style.display=(showOverlay&&!loDismissed)?'flex':'none';
+}
+checkOrientation();
+window.addEventListener('orientationchange',function(){setTimeout(checkOrientation,100);});
+var loLastW=window.innerWidth;
+window.addEventListener('resize',function(){
+  if(window.innerWidth!==loLastW){loLastW=window.innerWidth;checkOrientation();}
+});
+document.getElementById('loOkBtn').addEventListener('click',function(){
+  loDismissed=true;landscapeOverlay.style.display='none';
+  try{ localStorage.setItem('will-lo','1'); }catch(e){}
+});
+
+// ── SCROLL ENGINE: Lenis (inertial smooth scroll) + GSAP ScrollTrigger ──
+// One system drives scroll. Lenis lerps the scroll value (compositor-friendly,
+// dampens when you stop). ScrollTrigger maps room progress to animations with
+// scrub easing. All animated props are transform/opacity only.
+
+// Lenis: buttery inertial scrolling
+var lenis = new Lenis({
+  duration: SITE.scroll.lenisDuration,   // lab: Scroll engine → Smooth duration
+  easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+  smoothWheel: true,
+  wheelMultiplier: SITE.scroll.wheelMult, // lab: Scroll engine → Wheel multiplier
+  touchMultiplier: 1.4
+});
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+// Resync Lenis's internal scroll after the hard reset above — without this it
+// would glide back DOWN to the restored position on the first frame.
+lenis.scrollTo(0, { immediate: true });
+
+// Autoscroll: when idle, glide the page down — intro traversed in ~14s.
+// Uses Lenis scrollTo (eased, interruptible) — no hand-rolled velocity ramp.
+var lastInputT = 0;
+var AUTO_IDLE_MS = SITE.scroll.idleMs;
+var autoScrollOn = true;
+function introSpan(){
+  // 14s phase = r1..r3 (whale video, title, description); transition is r4
+  var top = roomData[0].top;
+  var bot = roomData[2].top + roomData[2].height;
+  return { top: top, span: Math.max(1, bot - top) };
+}
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var armAt = performance.now() + 6000;   // hero breathes first; arming after 6s idle
+function userInputNow(){ lastInputT = performance.now(); armAt = 0; autoTicking = false; }
+['wheel','touchstart','touchmove','keydown','pointerdown'].forEach(function(ev){
+  window.addEventListener(ev, userInputNow, {passive:true});
+});
+var autoTicking = false;
+var autoV = 0;                        // current autoscroll velocity (px/s)
+var autoLastT = 0;
+// Autoscroll runs inside the gsap.ticker (every frame, cannot die).
+// Contract: while the user is idle inside the intro, THE SITE SCROLLS ITSELF.
+// Lenis is stopped so its smoothing cannot fight the native scroll; on any
+// user input, Lenis is restarted and resynced instantly, handing control back.
+function autoscrollStep(){
+  if(!autoScrollOn || REDUCED) return;
+  var now = performance.now();
+  if(now < armAt) return;              // rooms 1-3 play first, no forced skip
+  var idle = now - lastInputT >= AUTO_IDLE_MS
+      && !(SITE.gallery.pauseOnHover && galHover);   // lab Pause on hover
+  var s = introSpan(), galleryTop = s.top + s.span;
+  var inIntro = window.scrollY < galleryTop - 2;
+  if(idle && inIntro){
+    // user idle + intro: take over and glide
+    if(!lenis.isStopped) lenis.stop();
+    if(!autoLastT) autoLastT = now;
+    var dtMs = Math.min(50, now - autoLastT);
+    autoLastT = now;
+    var cruise = s.span / SITE.scroll.cruiseSec;   // intro traversed in ~cruiseSec s
+    var remain = galleryTop - window.scrollY;
+    if(remain < window.innerHeight * 2){                 // ease out near gallery
+      cruise *= Math.max(0, remain / (window.innerHeight * 2));
+    }
+    autoV += (cruise - autoV) * Math.min(1, dtMs / 400); // buttery ramp
+    if(autoV < 1) autoV = 0;
+    window.scrollBy(0, autoV * dtMs / 1000);
+    autoTicking = autoV > 0;
+  }else{
+    // user active (or at gallery): release control back to Lenis
+    autoV = 0;
+    autoLastT = 0;
+    autoTicking = false;
+    if(lenis.isStopped){
+      lenis.start();
+      lenis.scrollTo(window.scrollY, { immediate: true }); // resync Lenis
+    }
+  }
+}
+gsap.ticker.add(autoscrollStep);
+
+// ScrollTrigger: room progress -> animations (scrub easing, transform/opacity only)
+gsap.registerPlugin(ScrollTrigger);
+
+// ── HERO STORY: ONE scrubbed timeline OWNS every hero element ──
+// A single timeline spans r2→r4 with enter AND exit keyframes per element.
+// This is deliberate: with two separate scrubbed tweens (enter + exit) on the
+// same property, the exit tween's captured start clobbers the entry tween on
+// reverse scroll — the name/description stayed visible at the top. Sequential
+// keyframes in ONE timeline render only up to the playhead, so reverse scroll
+// returns every element exactly to its room-1 state.
+// Ranges (scroll px, 568px viewport): slate in 170→340, desc in 340→652,
+// r4 (hero slide + quote) starts 965, trigger ends r4.bottom−vh ≈ 2670.
+gsap.timeline({
+  scrollTrigger: {
+    trigger: '#r2',
+    // Function-based positions: a mixed-element string like '#r4 bottom bottom'
+    // parsed to a zero-length range (end == start) — the timeline then snapped
+    // to its end state on the first pixel of scroll.
+    start: function(){ return document.getElementById('r2').offsetTop; },
+    end:   function(){ var r4 = document.getElementById('r4');
+                      return r4.offsetTop + r4.offsetHeight - window.innerHeight; },
+    scrub: 1
+  }
+})
+// Enter (rooms 2-3): name, then description, rise into place over the whale.
+.fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.068, ease: 'power2.out' }, 0)
+.fromTo('#descLine', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.125, ease: 'power2.out' }, 0.068)
+// Exit (room 4): whole hero glides up together at linear ease...
+.to('#whaleWrap', { yPercent: -100, duration: 0.682, ease: 'none' }, 0.318)
+.to('#slateStage', { y: '-70vh', duration: 0.682, ease: 'none' }, 0.318)
+.to('#descLine', { y: '-70vh', duration: 0.682, ease: 'none' }, 0.318)
+// ...but OPACITY front-loads so the hero is gone before the quote appears —
+// otherwise the quote overlapped the still-visible name/description.
+.to('#whaleWrap', { opacity: 0, duration: 0.232, ease: 'power2.in' }, 0.318)
+.to('#slateStage', { opacity: 0, duration: 0.232, ease: 'power2.in' }, 0.318)
+.to('#descLine', { opacity: 0, duration: 0.232, ease: 'power2.in' }, 0.318)
+// Quote: fades in only after the hero has cleared, holds through the slide.
+.fromTo('#quoteStage', { opacity: 0 }, { opacity: 1, duration: 0.05, ease: 'power2.out' }, 0.55)
+// Quote fades out only as the gallery approaches.
+.to('#quoteStage', { opacity: 0, duration: 0.15, ease: 'power2.in' }, 0.85);
+
+// ── GALLERY (r6): rises into view as the room arrives ──
+// Tied to r6, not r4: #galleryRoom is absolutely positioned inside r6's sticky,
+// so it only enters the viewport as r6 arrives. Driving it from r4 left the
+// rise invisible AND left the fixed #galleryFloor black band on screen. One
+// owner per property.
+gsap.timeline({
+  scrollTrigger:{ trigger:'#r6', start:'top bottom', end:'top top', scrub:1 }
+})
+.fromTo('#galleryRoom',
+  { yPercent:100, opacity:0 },
+  { yPercent:0, opacity:1, visibility:'visible', duration:1, ease:'power2.out' }, 0)
+.to('#galleryFloor', { opacity:1, duration:1, ease:'power2.out' }, 0);
+
+// Title chars: reveal progressively as r2 is scrolled (scrubbed, re-enters).
+ScrollTrigger.create({
+  trigger: '#r2', start: 'top 0%', end: 'top -30%', scrub: true,
+  onUpdate: function(self){
+    var target = Math.floor(Math.min(1, self.progress / 0.2) * nameVPChars.length);
+    if(target !== nameRevealCount){ revealNameChars(target); nameRevealCount = target; }
+  }
+});
+
+// Nav bar: matches the network/blog top bar — a fixed bar that is always
+// visible, no scroll fade.
+
+// ── GALLERY ENGINE ────────────────────────────────────────────────────────────
+// Two sprung scalars drive the ring; every card's transform is derived from
+// them, so the ring moves as a rigid body and cannot jank.
+//
+//  1. CYLINDER (React Bits circular-carousel geometry). The ring rotates as ONE
+//     body: camera translateZ(-R) rotateX(-5deg) + per-card rotateY(base)
+//     translateZ(R). Each card is 8 vertical tiles that BEND around the drum, so
+//     the photos visibly wrap the cylinder; back faces (darkened) show through
+//     the gaps; cards depth-fade toward black as they turn away. A single
+//     spring on focus (card units, 0..count-1) glides the whole ring — every
+//     card has a unique world angle, so coplanar overlap is impossible.
+//
+//  2. REST SNAP. While scrolling the ring follows the raw continuous target;
+//     once the scroll is still for REST_DELAY the target eases onto the nearest
+//     slot, putting the focused card dead centre — mirroring the mobile row's
+//     scroll-snap-align:center.
+//
+//  3. PROGRESS FROM RAW SCROLL. Read `window.scrollY` inside the tick, like the
+//     reference. ScrollTrigger's onUpdate only fires on scroll events, so between
+//     events the old `focusTarget` went stale and the ring trailed a frame behind.
+//
+//  4. STABLE STACKING. z-index / pointer-events use the ROUNDED slot, so the
+//     3D order never flickers while the ring is gliding between slots.
+//
+//  5. FIXED TIMESTEP. The integrator always advances in 1/60s chunks regardless
+//     of refresh rate, so the constants behave identically at 60/120/144Hz.
+//
+// On mobile portrait the gallery is a native scroll-snap row; the desktop spring
+// is skipped there and the scroll listener below drives the focused pill.
+var ringCards = Array.prototype.slice.call(document.querySelectorAll('.ring-card'));
+var total = ringCards.length;
+var galP = 0;          // raw gallery progress 0..1, read straight from scrollY
+var focusTarget = 0;   // scroll position in card units (continuous)
+var focus = 0;         // spring-integrated focus — drives horizontal position
+var focusVel = 0;
+// Focus-centring state: how long the scroll has been still, plus the last raw
+// continuous target, so the ring can ease onto a slot once the scroll stops.
+var restT = 0;
+var lastFocusRaw = 0;
+var REST_DELAY = 0.12;   // seconds of stillness before snapping onto the slot
+
+// Spring tuning — near-critical damping, no overshoot. Research (spring-physics
+// tutorials: Heckel, kvin) says smooth UI motion = little/no overshoot + a
+// longer, gentler settle; bounce reads as twitchy. Simulated: 0.0% overshoot,
+// 0.65s settle. The depth spring shares this tuning — the shared lag is what
+// keeps adjacent cards from ever being coplanar.
+var G_STIFF = SITE.gallery.stiff, G_DAMP = SITE.gallery.damp;
+var G_FIXED_DT = 1 / 60, MAX_CATCHUP = 5;
+// CYLINDER geometry (React Bits circular-carousel, cylinder preset): the ring
+// ROTATES as one body (rotateY), cards face outward and BEND around the drum
+// (8-tile curve), the camera sits R back at a -5deg tilt, and cards depth-fade
+// toward black as they turn away. Lab sliders stay meaningful: Card gap widens
+// the pitch (radius), Depth spread moves the camera (perspective).
+var G_TILT=SITE.gallery.tilt;   // camera looks down onto the ring (deg) — live
+var DEPTH_FADE=SITE.gallery.depthFade; // how hard cards fade toward black — live
+var TO_RAD=Math.PI/180;
+var STEP_DEG=360/(ringCards.length||8);   // degrees per slot (45 for 8 cards)
+
+// DEBUG HOOK: lets probes read the live focus instead of assigning an
+// unreachable global.
+window.__marg = {
+  get focus(){ return focus; },
+  get focusTarget(){ return focusTarget; },
+  get prog(){ return galP; },
+  setFocus: function(v){
+    var r6 = galRoomData;
+    window.scrollTo(0, r6.top + (v / total) * Math.max(1, r6.height - viewH));
+  }
+};
+
+// Mobile: the horizontal swipe drives the focused card (scroll-snap row).
+// Card centres are cached on resize — reading offsetLeft per card per scroll
+// event forced a layout read every frame (layout thrash on mobile).
+var mobilePortrait = window.innerWidth <= 900 && window.innerHeight >= window.innerWidth;
+var galleryEl = document.getElementById('galleryRoom');
+// Lab Parallax / Pause-on-hover state: pointer over the gallery room drives a
+// gentle camera yaw/pitch (React Bits parallax) and can hold the autoscroll.
+var galHover=false, galPX=0, galPY=0, galYaw=0, galPitch=0;
+if(galleryEl){
+  galleryEl.addEventListener('pointerenter',function(){galHover=true;});
+  galleryEl.addEventListener('pointerleave',function(){galHover=false;galPX=0;galPY=0;});
+  galleryEl.addEventListener('pointermove',function(ev){
+    var r=galleryEl.getBoundingClientRect();
+    galPX=Math.max(-1,Math.min(1,(ev.clientX-r.left)/r.width*2-1));
+    galPY=Math.max(-1,Math.min(1,(ev.clientY-r.top)/r.height*2-1));
+  },{passive:true});
+}
+// DRAGGABLE RING (lab Draggable): grab the ring and turn it. The ring is
+// scroll-driven, so a horizontal drag scrolls the page — Lenis is stopped
+// mid-drag (the same pattern as the intro autoscroll) and the ring tracks the
+// pointer 1:1 (one card-width of drag = one card). Release throws with
+// momentum (lab Momentum) or settles onto the nearest card via the rest-snap.
+var dragState=null;
+if(galleryEl){
+  galleryEl.addEventListener('pointerdown',function(ev){
+    if(mobilePortrait||!SITE.gallery.draggable)return;
+    if(ev.button!==0)return;
+    dragState={id:ev.pointerId,x:ev.clientX,y:ev.clientY,moved:false,
+      samples:[{t:performance.now(),y:window.scrollY}]};
+    lastInputT=performance.now();
+    try{galleryEl.setPointerCapture(ev.pointerId);}catch(e){}
+  });
+  galleryEl.addEventListener('pointermove',function(ev){
+    if(!dragState||dragState.id!==ev.pointerId)return;
+    var dx=ev.clientX-dragState.x,dy=ev.clientY-dragState.y;
+    if(!dragState.moved){
+      if(Math.abs(dx)<5&&Math.abs(dy)<5)return;
+      if(Math.abs(dy)>Math.abs(dx)*1.2)return;   // vertical intent = normal page scroll
+      dragState.moved=true;
+      dragState.x=ev.clientX;dragState.y=ev.clientY;
+      lenis.stop();
+      galleryEl.classList.add('grabbing');
+    }
+    var deltaX=ev.clientX-dragState.x;
+    dragState.x=ev.clientX;dragState.y=ev.clientY;
+    var spanGal=(galRoomData?galRoomData.height:viewH+1)-viewH;
+    var k=Math.max(1,spanGal/(total*(360*cardK)));  // px of scroll per px of drag
+    window.scrollBy(0,-deltaX*k);
+    var now=performance.now();
+    dragState.samples.push({t:now,y:window.scrollY});
+    while(dragState.samples.length>2&&now-dragState.samples[0].t>110)dragState.samples.shift();
+    lastInputT=now;
+  });
+  function endDrag(ev){
+    if(!dragState||dragState.id!==ev.pointerId)return;
+    var s=dragState;dragState=null;
+    galleryEl.classList.remove('grabbing');
+    try{galleryEl.releasePointerCapture(ev.pointerId);}catch(e){}
+    if(!s.moved)return;
+    var first=s.samples[0],last=s.samples[s.samples.length-1];
+    var spanMs=last.t-first.t;
+    var vel=spanMs>8?(last.y-first.y)/spanMs*1000:0;   // scroll velocity px/s
+    var tau=0.18+SITE.gallery.momentum*1.5;
+    lenis.start();
+    lenis.scrollTo(window.scrollY,{immediate:true});
+    if(Math.abs(vel)>80&&SITE.gallery.momentum>0&&SITE.gallery.snap){
+      lenis.scrollTo(window.scrollY+vel*tau*0.55,{duration:Math.min(2.2,Math.max(0.3,tau*1.4))});
+    }
+    window.__suppressRingClick=performance.now();
+  }
+  galleryEl.addEventListener('pointerup',endDrag);
+  galleryEl.addEventListener('pointercancel',endDrag);
+  // a real drag must not open the card link that was grabbed
+  galleryEl.addEventListener('click',function(ev){
+    if(window.__suppressRingClick&&performance.now()-window.__suppressRingClick<400){
+      ev.preventDefault();ev.stopPropagation();window.__suppressRingClick=0;
+    }
+  },true);
+}
+var cardCentres = [];
+function cacheCardCentres(){
+  cardCentres = ringCards.map(function(card){
+    return card.offsetLeft + card.offsetWidth / 2;
+  });
+}
+// Nearest-card picker, shared by the swipe handler AND the initial paint, so
+// the pill is lit on first load without requiring a scroll event.
+function pickFocused(){
+  if(!galleryEl || !mobilePortrait) return;
+  var vc = galleryEl.clientWidth / 2, idx = 0, best = Infinity;
+  for(var i = 0; i < cardCentres.length; i++){
+    var d = Math.abs(cardCentres[i] - galleryEl.scrollLeft - vc);
+    if(d < best){ best = d; idx = i; }
+  }
+  ringCards.forEach(function(card, i){ card.classList.toggle('focused', i === idx); });
+}
+cacheCardCentres();
+pickFocused();
+window.addEventListener('resize', function(){ cacheCardCentres(); pickFocused(); });
+if(galleryEl){
+  galleryEl.addEventListener('scroll', pickFocused, {passive:true});
+}
+
+function smooth01(v){ v = v < 0 ? 0 : v > 1 ? 1 : v; return v * v * (3 - 2 * v); }
+
+// One fixed simulation step. Pure integration — no DOM writes.
+function galleryStep(){
+  // Room progress read straight from the scroll position, exactly like the
+  // reference. ScrollTrigger's onUpdate only fires on scroll events, so between
+  // events the old focusTarget went stale and the ring lagged a frame behind.
+  var r6 = galRoomData;
+  var span = r6.height - viewH;
+  galP = span <= 0 ? (r6.top <= window.scrollY ? 1 : 0) : clamp01((window.scrollY - r6.top) / span);
+
+  // KEEP THE FOCUS CENTRED. tx is derived from the fractional focus, so with a
+  // purely continuous target the lit card sits up to half a card-width off centre
+  // at every rest position — measured 153px off at gap 306px, and the pill lights
+  // on round(focus) while that card is displaced by frac(focus) * gap.
+  // While the scroll is moving the ring follows it continuously so it never feels
+  // dead; once the scroll has been still for REST_DELAY the target eases onto the
+  // nearest slot, which puts the focused card dead centre (tx = 0) and lights its
+  // pill. This mirrors the mobile row, where scroll-snap-align:center already
+  // guarantees a centred card.
+  // FULL REVOLUTION: focus runs 0..total (not 0..total-1), so the ring turns a
+  // complete 360deg and lands back on card 0 at the end of the gallery instead
+  // of dead-ending on the last card. Card i sits front when focus == i (mod
+  // total), so focus == total puts card 0 front again — an endless loop.
+  var fRaw = galP * total;
+  if(Math.abs(fRaw - lastFocusRaw) > 0.0002){
+    restT = 0;
+    lastFocusRaw = fRaw;
+    focusTarget = fRaw;
+  }else{
+    restT += G_FIXED_DT;
+    if(restT >= REST_DELAY && SITE.gallery.snap) focusTarget = Math.round(fRaw);
+  }
+
+  // ONE spring drives the horizontal position, so the ring glides as a single
+  // rigid body. The previous version gave every card its own spring chasing a
+  // continuously-moving target, so each card lagged by a different amount and the
+  // cards fell out of alignment — that misalignment is what read as jank.
+  focusVel += (focusTarget - focus) * G_STIFF;
+  focusVel *= G_DAMP;
+  focus += focusVel;
+  if(Math.abs(focusTarget - focus) < 0.001 && Math.abs(focusVel) < 0.001){
+    focus = focusTarget; focusVel = 0;
+  }
+
+}
+
+// Render the ring — React Bits cylinder. The ring is ONE rotating body: the
+// camera wrapper (translateZ(-R) rotateX(tilt)) + per-card rotateY(base) walk
+// each card around the drum; the tiles inside bend the card around the curve.
+// Depth comes from the geometry alone (every card has a unique world angle, so
+// coplanar overlap is impossible — no depthFocus needed). Cards depth-fade via
+// --cc-depth on their shade layer.
+function galleryRender(){
+  // Modular: focus now reaches `total`, where card 0 is front again — the lit
+  // pill must wrap with it instead of clamping onto the last card.
+  var slot = ((Math.round(focus) % total) + total) % total;
+  var swell = 1 + SITE.gallery.stretch * 0.12 * Math.min(1, Math.abs(focusVel) / 420); // lab Stretch
+  var R = ccRadius() * swell;
+  var persp = Math.max(600, SITE.gallery.perspective / SITE.gallery.depth); // lab Perspective/Depth -> camera
+  var perspStr = persp.toFixed(0) + 'px';
+  if(galleryEl._lastP !== perspStr){ galleryEl.style.perspective = perspStr; galleryEl._lastP = perspStr; }
+  // lab Parallax: camera leans toward the pointer (lerped so it never snaps)
+  var aimYaw = galPX * SITE.gallery.parallax * 9, aimPitch = -galPY * SITE.gallery.parallax * 6;
+  galYaw += (aimYaw - galYaw) * 0.1; galPitch += (aimPitch - galPitch) * 0.1;
+  var camStr = 'translateZ(' + (-R).toFixed(1) + 'px) rotateX(' + (SITE.gallery.tilt + galPitch).toFixed(2) +
+               'deg) rotateY(' + galYaw.toFixed(2) + 'deg)';
+  if($cardRing._lastC !== camStr){ $cardRing.style.transform = camStr; $cardRing._lastC = camStr; }
+  var dir = SITE.gallery.direction === 'right' ? 1 : -1;   // lab Direction
+  var angle = dir * focus * STEP_DEG;   // ring angle (deg); focus 0..count-1 -> card 0 front
+  for(var i = 0; i < ringCards.length; i++){
+    var card = ringCards[i];
+    var base = i * STEP_DEG;
+    var tStr = 'rotateY(' + (base + angle).toFixed(2) + 'deg) translateZ(' + R.toFixed(1) + 'px)';
+    if(card._lastT !== tStr){ card.style.transform = tStr; card._lastT = tStr; }
+    var world = wrap(base + angle);
+    var facing = Math.cos(world * TO_RAD);
+    var fade = SITE.gallery.depthFade * Math.pow((1 - facing) / 2, 1.25);
+    var dStr = fade.toFixed(3);
+    if(card._lastD !== dStr){ card.style.setProperty('--cc-depth', dStr); card._lastD = dStr; }
+    var fCls = (i === slot);   // one lit pill at a time — matches the mobile row
+    if(card._lastF !== fCls){ card.classList.toggle('focused', fCls); card._lastF = fCls; }
+  }
+}
+function wrap(d){ d = ((d + 180) % 360 + 360) % 360 - 180; return d; }
+
+// The single rAF driver: accumulate real elapsed time, advance the simulation in
+// fixed 1/60s chunks, then render once.
+var lastGalT = 0, galAcc = 0;
+function galleryTick(now){
+  requestAnimationFrame(galleryTick);
+  if(mobilePortrait) return;                     // mobile path owns the ring
+  if(!lastGalT){ lastGalT = now; galAcc = 0; }
+  galAcc += Math.min(0.1, (now - lastGalT) / 1000);   // clamp tab-hidden stalls
+  lastGalT = now;
+  var steps = 0;
+  while(galAcc >= G_FIXED_DT && steps < MAX_CATCHUP){ galleryStep(); galAcc -= G_FIXED_DT; steps++; }
+  if(steps === MAX_CATCHUP) galAcc = 0;          // drop the backlog, do not spiral
+  galleryRender();
+}
+requestAnimationFrame(galleryTick);
+
+
+// ── VARIABLE PROXIMITY: cursor distance -> variable font weight (all text) ──
+// Pure maths lives in js/vp-engine.js (window.VPEngine) so it is unit-testable in Node.
+// EVERY element's text is split into per-character spans (one-time, layout-
+// preserving), so each glyph responds to its OWN radial distance from the cursor
+// — a round, soft-edged blob instead of per-element rectangles lighting up.
+// Positions re-cache debounced on lenis scroll + resize, so scrubbed/3D-moved
+// text keeps its true place. Values chase their targets through an exponential
+// ease (~120ms), change-guarded writes only.
+var VP=window.VPEngine;
+var vpCfg=SITE.vp;
+var vpCursor={x:-9999,y:-9999};
+var vpEls=[];
+var VP_SELECTORS=[
+  '#descLine','#quoteStage blockquote','#quoteStage cite','#sloganBar',
+  '.content-tag','.content-title','.content-body p','.content-lede','.tour-date',
+  '.tour-card h4','.tour-card p','.tour-card a','.donate-note',
+  '.ring-card-pill','.ring-card-title','.sect-btn'
+];
+
+// An element is "anchored" when its visual position does not track the document
+// scroll: position:fixed always, and position:sticky while it is stuck (the gallery
+// pills live inside r6's sticky). Anchored elements cache their VIEWPORT rect;
+// everything else caches a document-space top and is resolved per frame.
+function vpIsFixed(el){
+  var n=el;
+  while(n&&n!==document.body){
+    var p=getComputedStyle(n).position;
+    if(p==='fixed'||p==='sticky')return true;
+    n=n.parentNode;
+  }
+  return false;
+}
+
+// One-time split: wrap every text node directly under a VP element into
+// per-character inline spans. Layout is preserved (inline boxes, same
+// inherited styles); only the element's text nodes are touched.
+function vpSplitAll(){
+  function split(el){
+    if(el.dataset&&el.dataset.vpsplit)return;
+    var kids=Array.prototype.slice.call(el.childNodes);
+    kids.forEach(function(node){
+      if(node.nodeType!==3||!node.nodeValue)return; // text nodes only
+      var frag=document.createDocumentFragment();
+      for(var i=0;i<node.nodeValue.length;i++){
+        var s=document.createElement('span');
+        s.className='vpch';
+        s.textContent=node.nodeValue.charAt(i);
+        frag.appendChild(s);
+      }
+      el.replaceChild(frag,node);
+    });
+    el.dataset.vpsplit='1';
+  }
+  VP_SELECTORS.forEach(function(sel){
+    var list=document.querySelectorAll(sel);
+    for(var i=0;i<list.length;i++)split(list[i]);
+  });
+}
+
+function vpCache(){
+  if(!VP)return;
+  if(!vpSplitDone){vpSplitAll();vpSplitDone=true;}
+  vpEls=[];
+  function add(el,fixed){
+    var r=el.getBoundingClientRect();
+    var cs=getComputedStyle(el);
+    var sz=parseFloat(cs.fontSize)||16;
+    vpEls.push({
+      el:el, fixed:fixed, left:r.left, top:r.top, w:r.width, h:r.height,
+      docTop:r.top+window.scrollY,
+      baseW:parseFloat(cs.fontWeight)||400,
+      // opsz is only driven where the font actually has an optical axis
+      opszBase:cs.fontFamily.indexOf('Roboto Flex')!==-1?Math.round(sz):null
+    });
+  }
+  VP_SELECTORS.forEach(function(sel){
+    var list=document.querySelectorAll(sel);
+    for(var i=0;i<list.length;i++){
+      var el=list[i];
+      var fx=vpIsFixed(el);
+      if(el.dataset&&el.dataset.vpsplit){
+        var chs=el.querySelectorAll(':scope > span.vpch');
+        for(var c=0;c<chs.length;c++)add(chs[c],fx);
+      }else{add(el,fx);}
+    }
+  });
+  if(nameVPChars)for(var j=0;j<nameVPChars.length;j++)add(nameVPChars[j],vpIsFixed(nameVPChars[j]));
+}
+
+// VP smoothing: target weights are the RAW cursor distance (compute() output),
+// but every glyph CHASES its target through an exponential ease (~120ms time
+// constant), so mouse micro-jitter is filtered before it reaches the font.
+// Writes are change-guarded (only when the rounded string differs) and the
+// return-to-rest is eased too — nothing ever snaps.
+var vpSplitDone=false;
+var VP_EASE_K=1-Math.exp(-1/60/0.12);
+var vpCacheT=0;
+function vpCacheSoon(){clearTimeout(vpCacheT);vpCacheT=setTimeout(vpCache,250);}
+function vpStep(){
+  if(!VP||REDUCED)return;
+  var cx=vpCursor.x,cy=vpCursor.y,sy=window.scrollY;
+  for(var i=0;i<vpEls.length;i++){
+    var e=vpEls[i];
+    var top=e.fixed?e.top:e.docTop-sy;
+    var r=VP.compute({cx:cx,cy:cy,ex:e.left+e.w/2,ey:top+e.h/2,
+      radius:vpCfg.radius,baseW:e.baseW,swing:vpCfg.swing,strength:vpCfg.strength,
+      opszBase:e.opszBase,opszSwing:.2});
+    var resting=e.opszBase==null?e.baseW:e.opszBase;
+    var tW=r.t<=0.001?e.baseW:r.wght;                 // outside radius -> ease to rest
+    var tO=r.t<=0.001?(e.opszBase==null?null:e.opszBase):r.opsz;
+    if(!e.cur){e.cur={w:tW,o:tO};}                      // first frame: adopt target
+    e.cur.w+=(tW-e.cur.w)*VP_EASE_K;
+    if(tO==null){e.cur.o=null;}else{e.cur.o+=(tO-e.cur.o)*VP_EASE_K;}
+    if(Math.abs(e.cur.w-e.baseW)<0.6&&(tO==null||Math.abs(e.cur.o-resting)<0.6)){
+      if(e.on){e.el.style.fontVariationSettings=VP.formatSettings(e.baseW,e.opszBase);e.on=false;}
+      continue;
+    }
+    e.on=true;
+    var fs=VP.formatSettings(Math.round(e.cur.w),e.cur.o==null?null:Math.round(e.cur.o));
+    if(e._lastFS!==fs){e.el.style.fontVariationSettings=fs;e._lastFS=fs;}
+  }
+}
+window.addEventListener('pointermove',function(ev){vpCursor.x=ev.clientX;vpCursor.y=ev.clientY;},{passive:true});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(vpCache);
+vpCache();
+gsap.ticker.add(vpStep);
+// Positions go stale while hero text scrubs with the timeline or ring cards
+// glide in 3D — re-cache after the scroll settles (and on resize).
+if(lenis)lenis.on('scroll',vpCacheSoon);
+window.addEventListener('resize',vpCacheSoon);
+
+// ── ANIMATION LAB: lil-gui panel driving SITE live ──
+var labToggle=document.getElementById('labToggle');
+var labHost=document.getElementById('labHost');
+var gui=null;
+
+function hexRgb(hex){
+  var m=/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(String(hex||'').trim());
+  return m?[parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)]:[244,241,234];
+}
+
+function applyAll(){
+  if(lenis&&lenis.options){
+    lenis.options.duration=SITE.scroll.lenisDuration;
+    lenis.options.wheelMultiplier=SITE.scroll.wheelMult;
+  }
+  AUTO_IDLE_MS=SITE.scroll.idleMs;
+  G_STIFF=SITE.gallery.stiff; G_DAMP=SITE.gallery.damp;
+  G_TILT=SITE.gallery.tilt; DEPTH_FADE=SITE.gallery.depthFade;
+  autoScrollOn=SITE.gallery.autoplay!=='off';   // lab Autoplay -> intro cruise
+  cardK=computeCardK();
+  rebuildTiles();   // card size / gap / curve / corner radius -> re-slice the cylinder tiles
+  var st=document.documentElement.style;
+  st.setProperty('--k',cardK);
+  st.setProperty('--cc-inner',(1-SITE.gallery.innerShade).toFixed(3));
+  st.setProperty('--reflect-op',SITE.gallery.reflect);
+  st.setProperty('--body-font',"'"+SITE.vp.family+"',sans-serif");
+  st.setProperty('--purple',SITE.vp.accent);
+  st.setProperty('--text-cream',SITE.vp.text);
+  var rgb=hexRgb(SITE.vp.text);
+  st.setProperty('--text-dim','rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',.5)');
+  vpCfg=SITE.vp;
+  vpCache();
+  // Persist so the live site keeps these settings without the sliders open.
+  if(!window.__suppressSave){
+    clearTimeout(window.__saveT);
+    window.__saveT=setTimeout(function(){try{localStorage.setItem('will.labcfg',JSON.stringify(SITE));}catch(e){}},400);
+  }
+}
+
+// base64url config codec — the lab's share link bakes the state into the URL
+function cfgEncode(){
+  var s=JSON.stringify(SITE);
+  return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function cfgDecode(str){
+  try{
+    var b=String(str).replace(/-/g,'+').replace(/_/g,'/');
+    while(b.length%4)b+='=';
+    return JSON.parse(decodeURIComponent(escape(atob(b))));
+  }catch(e){return null;}
+}
+function deepMerge(dst,src){
+  Object.keys(src).forEach(function(k){
+    if(src[k]&&typeof src[k]==='object'&&!Array.isArray(src[k])&&dst[k]&&typeof dst[k]==='object'){
+      deepMerge(dst[k],src[k]);
+    }else{dst[k]=src[k];}
+  });
+  return dst;
+}
+function shareUrl(){ return location.href.split('?')[0]+'?lab=1&cfg='+cfgEncode(); }
+
+var cfgMatch=/[?&]cfg=([^&]+)/.exec(location.search);
+if(cfgMatch){var decodedCfg=cfgDecode(cfgMatch[1]);if(decodedCfg)deepMerge(SITE,decodedCfg);}
+
+function buildLab(){
+  if(!window.lil||!window.lil.GUI)return;
+  if(gui){gui.destroy();gui=null;}
+  gui=new window.lil.GUI({title:'margreenie \u00b7 animation lab',container:labHost,width:300});
+
+  var fScroll=gui.addFolder('Scroll engine');
+  fScroll.open();
+  fScroll.add(SITE.scroll,'lenisDuration',0.4,2.5,0.05).name('Smooth duration').onChange(applyAll);
+  fScroll.add(SITE.scroll,'wheelMult',0.4,2,0.05).name('Wheel multiplier').onChange(applyAll);
+  fScroll.add(SITE.scroll,'idleMs',200,3000,50).name('Autoscroll idle ms').onChange(applyAll);
+  fScroll.add(SITE.scroll,'cruiseSec',6,30,1).name('Intro seconds').onChange(applyAll);
+
+  var fGal=gui.addFolder('Gallery');
+  fGal.open();
+  // React Bits circular-carousel "Customize" set, mapped onto the scroll-driven
+  // cylinder. Preset is fixed to cylinder (the site's ring); the rest are live.
+  fGal.add(SITE.gallery,'stiff',0.01,0.2,0.005).name('Spring stiffness').onChange(applyAll);
+  fGal.add(SITE.gallery,'damp',0.3,0.95,0.01).name('Spring damping').onChange(applyAll);
+  fGal.add(SITE.gallery,'cardK',0.5,1.6,0.01).name('Card width').onChange(applyAll);
+  fGal.add(SITE.gallery,'tilt',-20,20,1).name('Tilt').onChange(applyAll);
+  fGal.add(SITE.gallery,'gap',0.4,1.4,0.01).name('Gap').onChange(applyAll);
+  fGal.add(SITE.gallery,'perspective',800,6000,50).name('Perspective').onChange(applyAll);
+  fGal.add(SITE.gallery,'curve',0,1,0.01).name('Curve').onChange(applyAll);
+  fGal.add(SITE.gallery,'stretch',0,1,0.01).name('Stretch').onChange(applyAll);
+  fGal.add(SITE.gallery,'depthFade',0,1,0.01).name('Depth fade').onChange(applyAll);
+  fGal.add(SITE.gallery,'innerShade',0,1,0.01).name('Inner shade').onChange(applyAll);
+  fGal.add(SITE.gallery,'cornerRadius',0,32,1).name('Corner radius').onChange(applyAll);
+  fGal.add(SITE.gallery,'parallax',0,1,0.01).name('Parallax').onChange(applyAll);
+  fGal.add(SITE.gallery,'momentum',0,1,0.01).name('Momentum').onChange(applyAll);
+  fGal.add(SITE.gallery,'snap').name('Snap').onChange(applyAll);
+  fGal.add(SITE.gallery,'pauseOnHover').name('Pause on hover').onChange(applyAll);
+  fGal.add(SITE.gallery,'focusOnClick').name('Focus on click').onChange(applyAll);
+  fGal.add(SITE.gallery,'draggable').name('Draggable').onChange(applyAll);
+  fGal.add(SITE.gallery,'autoplay',['drift','step','off']).name('Autoplay').onChange(applyAll);
+  fGal.add(SITE.gallery,'speed',1,60,1).name('Speed').onChange(applyAll);
+  fGal.add(SITE.gallery,'interval',0.5,10,0.5).name('Interval').onChange(applyAll);
+  fGal.add(SITE.gallery,'direction',['left','right']).name('Direction').onChange(applyAll);
+  fGal.add(SITE.gallery,'intro',['rise','assemble','spin','none']).name('Intro').onChange(applyAll);
+  fGal.add(SITE.gallery,'captions').name('Captions').onChange(applyAll);
+  fGal.add(SITE.gallery,'reflect',0,1,0.01).name('Reflection opacity').onChange(applyAll);
+  fGal.add(SITE.gallery,'depth',0.2,2.5,0.05).name('Depth spread').onChange(applyAll);
+
+  var fType=gui.addFolder('Text \u00b7 proximity');
+  fType.open();
+  fType.add(SITE.vp,'radius',60,700,10).name('Proximity radius').onChange(applyAll);
+  fType.add(SITE.vp,'swing',0,1,0.01).name('Weight swing').onChange(applyAll);
+  fType.add(SITE.vp,'strength',0,1,0.01).name('Proximity strength').onChange(applyAll);
+  fType.add(SITE.vp,'family',['Inter','Roboto Flex','Oswald']).name('Body font').onChange(applyAll);
+  fType.addColor(SITE.vp,'text').name('Text colour').onChange(applyAll);
+  fType.addColor(SITE.vp,'accent').name('Accent colour').onChange(applyAll);
+
+  gui.add({
+    reset:function(){
+      deepMerge(SITE,DEFAULTS);
+      try{localStorage.removeItem('will.labcfg');}catch(e){}
+      applyAll();
+      if(gui&&gui.controllersRecursive)gui.controllersRecursive().forEach(function(c){if(c.updateDisplay)c.updateDisplay();});
+    },
+    copy:function(){
+      var url=shareUrl();
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url);
+      window.__labUrl=url;
+    }
+  },'reset').name('Reset to defaults');
+  gui.add({
+    copy:function(){
+      var url=shareUrl();
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url);
+      window.__labUrl=url;
+    }
+  },'copy').name('Copy share link');
+  gui.add({
+    save:function(){
+      try{localStorage.setItem('will.labcfg',JSON.stringify(SITE));}catch(e){}
+      window.__labCfg=JSON.stringify(SITE);   // paste to the deploy agent to bake
+    }
+  },'save').name('Save to site');
+}
+
+applyAll();   // initial apply — picks up ?cfg= and the defaults
+
+// The lab is a PRIVATE tuning tool: it only exists behind ?lab=1. Public
+// visitors never see the button or the panel — they get the baked defaults
+// (plus their own browser's saved settings if they ever saved one).
+var labOn=/[?&]lab=1/.test(location.search);
+function labShow(on){
+  labToggle.setAttribute('aria-expanded',on?'true':'false');
+  if(on){buildLab();}
+  else if(gui){gui.destroy();gui=null;}
+}
+if(!labOn){
+  labToggle.style.display='none';
+}else{
+  labToggle.addEventListener('click',function(){
+    labShow(labToggle.getAttribute('aria-expanded')!=='true');
+  });
+  labShow(true);
+}
+
+// Scroll reset
+if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+// Back/bfcache navigation also restores scroll — reset there too.
+window.addEventListener('pageshow', function(ev){
+  if(ev.persisted || window.scrollY !== 0){
+    window.scrollTo(0, 0);
+    if(lenis) lenis.scrollTo(0, { immediate: true });
+  }
+});
+
+
+})();
+</script>
+  <div class="bottom-bar" aria-hidden="true"></div>
 </body>
 </html>
