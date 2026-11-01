@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wgt-edutech.github.io/william/">
+<meta property="og:title" content="William Thomason — Regenerative Food Forest Planner">
+<meta property="og:description" content="Regenerative Food Forest Planner offering permaculture, syntropic farming, aquaponics, natural construction, event production and digital craft to Isikhova &amp; Ironwood.">
+<meta property="og:image" content="https://wgt-edutech.github.io/william/images/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<title>William Thomason — Regenerative Food Forest Planner</title>
+<link rel="icon" type="image/png" href="images/favicon-32.png">
+<link rel="apple-touch-icon" href="images/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/lenis.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="landscape-overlay" id="landscapeOverlay">
+  <div class="lo-icon">📱</div>
+  <h2>Rotate Your Phone</h2>
+  <p>This experience is designed for landscape orientation. Please turn your phone sideways for the best view.</p>
+  <button class="lo-btn" id="loOkBtn">OK</button>
+</div>
+
+<div class="hero-bg" id="heroBg" aria-hidden="true">
+  <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="images/hero-poster.jpg"
+         disablePictureInPicture>
+    <source src="images/hero-loop.mp4" type="video/mp4">
+  </video>
+  <div class="hero-scrim"></div>
+</div>
+
+<section class="room r1h" id="r1"><div class="sticky"></div></section>
+<section class="room r2h" id="r2"><div class="sticky"></div></section>
+<section class="room r3h" id="r3">
+  <div class="sticky"></div>
+  <div class="intro-slate" id="slateStage">
+    <div class="slate-card" id="nameStage"><h1 class="name-text" id="nameText">William Thomason</h1></div>
+  </div>
+  <div class="desc-line" id="descLine">Regenerative Food Forest Planner</div>
+</section>
+<section class="room r4h" id="r4">
+  <div class="sticky"></div>
+  <div class="quote-stage" id="quoteStage">
+    <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+    <blockquote>A garden that feeds people and improves itself — stronger each year, poisons never, soil that breathes under a seven-layer food forest.</blockquote>
+    <cite>&mdash; William Thomason</cite>
+  </div>
+</section>
+<section class="room r5h" id="r5"><div class="sticky"></div></section>
+<section class="room r6h" id="r6">
+  <div class="sticky">
+    <section id="galleryRoom"><div class="gallery-grid" id="galleryGrid"></div></section>
+  </div>
+</section>
+
+<section class="content-room" id="about">
+  <div class="content-inner">
+    <p class="content-tag">What I bring to Isikhova</p>
+    <h2 class="content-title">Nine years growing food without poison, plus the crafts to build a community</h2>
+    <p class="content-lede">I'm William Thomason — a Regenerative Food Forest Planner who has spent nine years designing poison-free growing systems (aquaponics, syntropic permaculture, hugel beds). I'm looking to bring that experience to Isikhova, alongside the other work I do: building infrastructure and tree-walkways / treehouses, running adventure-camp setups and workshops &amp; events, designing in Blender, producing sound journeys and retreats, and handling web development and social-media / PR quality control.</p>
+    <div class="grid g2">
+      <div class="card"><h3>The Term</h3><p>The term: a share in event proceeds and product sales, negotiated per project. I'm not asking for a salary — I have my own income, solar and internet — and I take on fixed work on the land in exchange for accommodation and the right to be here, earning a negotiated share of the proceeds from events and product sales I bring to market.</p></div>
+      <div class="card"><h3>The Goal</h3><p>A garden that feeds people and improves itself: stronger each year, poisons never, soil that breathes under a seven-layer food forest.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="content-room alt" id="cv">
+  <div class="content-inner">
+    <p class="content-tag">Curriculum Vitae</p>
+    <h2 class="content-title">Regenerative Food Forest Planner</h2>
+    <p class="content-lede">Prepared for an off-grid lifestyle community — Isikhova &amp; Ironwood, Swellendam.</p>
+    <div class="grid g4 stats">
+      <div class="stat-card"><span class="stat">9</span><span class="statlbl">Years growing</span></div>
+      <div class="stat-card"><span class="stat">0</span><span class="statlbl">Synthetic pesticides</span></div>
+      <div class="stat-card"><span class="stat">7</span><span class="statlbl">Forest layers</span></div>
+      <div class="stat-card"><span class="stat">365</span><span class="statlbl">Day operating plan</span></div>
+    </div>
+    <div class="card" style="margin-top:1.25rem">
+      <h3>Systems Under Management</h3>
+      <p style="margin-bottom:.5rem">
+        <span class="tag">Aquaponics</span><span class="tag">Hydroponics</span><span class="tag">Permaculture</span>
+        <span class="tag">Syntropic farming</span><span class="tag">Jadam / KNF</span><span class="tag">Hugelkultur</span>
+        <span class="tag">Food forest design</span><span class="tag">Vermiculture</span><span class="tag">Compost</span>
+        <span class="tag">Seed saving</span><span class="tag">Pollinator habitat</span><span class="tag">Volunteer training</span>
+      </p>
+    </div>
+    <div class="grid g2" style="margin-top:1.25rem">
+      <div class="card"><h3>Five Operating Principles</h3><ul>
+        <li><strong>Stratification</strong> — vertical layers by light demand</li>
+        <li><strong>Succession</strong> — placenta toward climax, always handing on</li>
+        <li><strong>Density</strong> — capture every photon, no bare soil</li>
+        <li><strong>Diversity</strong> — many species, many life cycles</li>
+        <li><strong>Disturbance</strong> — pruning as managed, deliberate disturbance</li>
+      </ul></div>
+      <div class="card"><h3>What I Build</h3><ul>
+        <li>Worm farms &mdash; vermiculture and aerated worm tea</li>
+        <li>Hot compost in correct layers: food, green, brown, biochar</li>
+        <li>Lactobacillus cultures, fermented plant juice, biochar &amp; rock dust</li>
+        <li>Continuous living cover &mdash; soil is never left bare</li>
+      </ul></div>
+    </div>
+    <div class="card" style="margin-top:1.25rem">
+      <p><strong>Rule:</strong> prune no more than 30% of any plant in one pass, and prune weekly. The prunings are the mulch &mdash; the system feeds itself. I wrote the plan, built it, and ran it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-room" id="gallery">
+  <div class="content-inner">
+    <p class="content-tag">Projects</p>
+    <h2 class="content-title">Work I can bring to the farm</h2>
+    <p class="content-lede">Below are the areas I want to contribute at Isikhova — from the food forest and aquaponics I already run, to the adventure camp, tree-walkways and digital craft on the horizon.</p>
+    <div class="gallery-grid">
+      <a class="gallery-card" href="#about" data-label="Food forest">
+        <img src="images/gallery/food-forest.png" alt="Seven-layer food forest" loading="lazy" decoding="async">
+        <span class="gallery-label">Food forest creation</span>
+      </a>
+      <a class="gallery-card" href="#about" data-label="Aquaponics">
+        <img src="images/gallery/aquaponics.png" alt="Aquaponics system" loading="lazy" decoding="async">
+        <span class="gallery-label">Aquaponics &amp; water</span>
+      </a>
+      <a class="gallery-card" href="#about" data-label="Treehouse">
+        <img src="images/gallery/treehouse.png" alt="Tree walkway and treehouse" loading="lazy" decoding="async">
+        <span class="gallery-label">Tree walkway &amp; treehouses</span>
+      </a>
+      <a class="gallery-card" href="#about" data-label="Construction">
+        <img src="images/gallery/construction.png" alt="Natural building and infrastructure" loading="lazy" decoding="async">
+        <span class="gallery-label">Construction &amp; infrastructure</span>
+      </a>
+      <a class="gallery-card" href="#about" data-label="Adventure">
+        <img src="images/gallery/adventure.png" alt="Adventure camp setup" loading="lazy" decoding="async">
+        <span class="gallery-label">Adventure camp</span>
+      </a>
+      <a class="gallery-card" href="#about" data-label="Workshops">
+        <img src="images/gallery/workshop.png" alt="Outdoor workshop and events" loading="lazy" decoding="async">
+        <span class="gallery-label">Workshops &amp; events</span>
+      </a>
+      <a class="gallery-card" href="#about" data-label="Retreats">
+        <img src="images/gallery/retreat.png" alt="Sound journey retreat" loading="lazy" decoding="async">
+        <span class="gallery-label">Sound journeys &amp; retreats</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="content-room alt" id="connect">
+  <div class="content-inner">
+    <p class="content-tag">Isikhova</p>
+    <h2 class="content-title">A place to grow, and to give back</h2>
+    <p class="content-lede">Isikhova &amp; Ironwood aims to live self-sufficiently and in harmony with Nature, breathing fresh mountain air in the Langeberg. That is exactly the conditions my work is built for.</p>
+    <div class="grid g2">
+      <div class="card"><h3>Why I fit here</h3><ul>
+        <li>Living soil, native pollinators and layered plantings reinforce the mountain veld instead of fighting it.</li>
+        <li>Adventure-camp build, tree-walkways and retreat facilitation turn conservation into income, not cost.</li>
+      </ul></div>
+      <div class="card"><h3>Let's talk</h3><p>I can be on the land within weeks &mdash; I have my own income, solar and internet. If this resonates, reach out through the Isikhova community page to arrange a conversation about how I can contribute to the next season.</p>
+        <p><a class="content-cta" href="https://www.facebook.com/profile.php?id=100066618686660" target="_blank" rel="noopener">Connect via the Isikhova page &rarr;</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <span>William Thomason &mdash; Regenerative Food Forest Planner</span>
+  <span>Isikhova &amp; Ironwood, Swellendam</span>
+</footer>
+
+<nav class="bottom-bar" aria-label="Section navigation">
+  <a href="#about">About</a>
+  <a href="#cv">CV</a>
+  <a href="#gallery">Projects</a>
+  <a href="#connect">Connect</a>
+</nav>
+<div class="section-buttons" id="sectionButtons">
+  <a href="#about" class="sect-btn">About</a>
+  <a href="#cv" class="sect-btn">CV</a>
+  <a href="#gallery" class="sect-btn">Projects</a>
+  <a href="#connect" class="sect-btn">Connect</a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
