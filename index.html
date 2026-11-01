@@ -708,7 +708,8 @@ cardData.forEach(function(card){
   // REAL LINKS, not clickable divs (a11y): keyboard activation, screen readers,
   // middle-click and copy-link all work. CSS and the engine treat <a> identically.
   var el=document.createElement('a');el.className='ring-card';
-  el.href=card.url||'/';el.target='_blank';el.rel='noopener';
+  el.href=card.url||'/';
+  if(card.url && card.url.charAt(0)!=='#'){ el.target='_blank'; el.rel='noopener'; }
   el.setAttribute('aria-label','Open '+card.name);
   el.dataset.img=card.img||'';
   var front=card.img
