@@ -25,7 +25,7 @@
 <script src="js/lil-gui.min.js"></script>
 <script src="js/vp-engine.js"></script>
 <style>
-:root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5);--body-font:'Inter',sans-serif}
+:root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.7);--body-font:'Inter',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:auto}
 body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -129,16 +129,16 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .content-inner{max-width:1000px;margin:0 auto;padding:0 2rem}
 .content-tag{font-family:var(--body-font),sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem}
 .content-title{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);text-transform:uppercase;letter-spacing:.04em;color:var(--text-cream);margin-bottom:1.5rem}
-.content-body{max-width:720px;font-size:1.02rem;color:var(--text-dim);display:flex;flex-direction:column;gap:1rem}
+.content-body{max-width:720px;font-size:1.15rem;color:var(--text-dim);display:flex;flex-direction:column;gap:1rem}
 .content-body strong{color:var(--text-cream)}
 .content-cta{color:var(--text-cream);font-weight:500}
 .content-cta a{color:var(--purple);text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)}
-.content-lede{max-width:640px;color:var(--text-dim);margin-bottom:2rem}
+.content-lede{max-width:640px;font-size:1.15rem;color:var(--text-dim);margin-bottom:2rem}
 .tour-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
 .tour-card{background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:.6rem}
 .tour-date{font-family:var(--body-font),sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
 .tour-card h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream)}
-.tour-card p{font-size:.9rem;color:var(--text-dim);flex:1}
+.tour-card p{font-size:1.05rem;color:var(--text-dim);flex:1}
 .tour-card a{color:var(--purple);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.04em}
 .tour-card a:hover{text-decoration:underline}
 .tour-soon{border-style:dashed}
@@ -205,7 +205,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   .landscape-overlay .lo-icon{font-size:3rem;animation:loRotate 2s ease-in-out infinite}
   @keyframes loRotate{0%,20%{transform:rotate(0deg)}60%,100%{transform:rotate(90deg)}}
   .landscape-overlay h2{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
-  .landscape-overlay p{font-family:var(--body-font),sans-serif;font-size:.9rem;color:var(--text-dim);max-width:320px;line-height:1.6}
+  .landscape-overlay p{font-family:var(--body-font),sans-serif;font-size:1.05rem;color:var(--text-dim);max-width:320px;line-height:1.6}
   .landscape-overlay .lo-btn{padding:.7em 2em;border-radius:999px;border:1px solid rgba(255,138,77,.4);background:rgba(255,138,77,.15);color:var(--text-cream);font-family:var(--body-font),sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s}
   .landscape-overlay .lo-btn:hover{background:rgba(255,138,77,.3);box-shadow:0 0 8px rgba(255,138,77,.3)}
 }
@@ -287,9 +287,9 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <h2 class="content-title">9 years of passionate growing and conservation practice, IT/Media/Webdev skills and an understanding of social media and tourism.</h2>
     <p class="content-lede">I'm William Thomason — a Regenerative Food Forest Planner who has spent nine years designing poison-free growing systems (aquaponics, syntropic permaculture, hugel beds). I'm looking to bring that experience to Isikhova, alongside the other work I do: building infrastructure and tree-walkways / treehouses, running adventure-camp setups and workshops &amp; events, designing in Blender, producing sound journeys and retreats, and handling web development and social-media / PR quality control.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Term</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">I'm not asking for a salary — I have my own income, solar and internet. Fixed work on the land in exchange for basic living arrangements. Apart from that, proceeds shares for commercial endeavours on the land can be discussed on a per-project basis.</p></div>
-          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Goal</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">To use my hard earned knowledge of natural systems and off-grid communities to play an integral role in establishing Isikhova and Ironwood and making it an exemplary pillar of conservation and sustainability that sets an example to the world.</p></div>
-          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Grants</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">I will actively seek and apply for grants, or assist in the process — researching funders, writing proposals, and managing submissions to bring in funding for conservation, infrastructure and community projects on the land.</p></div>
+          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Term</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">I'm not asking for a salary — I have my own income, solar and internet. Fixed work on the land in exchange for basic living arrangements. Apart from that, proceeds shares for commercial endeavours on the land can be discussed on a per-project basis.</p></div>
+          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">The Goal</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">To use my hard earned knowledge of natural systems and off-grid communities to play an integral role in establishing Isikhova and Ironwood and making it an exemplary pillar of conservation and sustainability that sets an example to the world.</p></div>
+          <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Grants</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">I will actively seek and apply for grants, or assist in the process — researching funders, writing proposals, and managing submissions to bring in funding for conservation, infrastructure and community projects on the land.</p></div>
         </div>
   </div>
 </section>
@@ -299,16 +299,16 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <p class="content-tag">Curriculum Vitae</p>
     <h2 class="content-title">William Gray Thomason</h2>
     <p class="content-lede">Digital Creativity &amp; ESL Tutor &mdash; Richards Bay, South Africa</p>
-    <p style="font-size:.9rem;color:rgba(244,241,234,.5);margin-bottom:1.5rem">+27 67 177 6770 &nbsp;|&nbsp; williamgraythomason@gmail.com &nbsp;|&nbsp; LinkedIn: @willliamthomason &nbsp;|&nbsp; Portfolio: wgt-edutech.github.io/Portfolio</p>
+    <p style="font-size:1.05rem;color:rgba(244,241,234,.7);margin-bottom:1.5rem">+27 67 177 6770 &nbsp;|&nbsp; williamgraythomason@gmail.com &nbsp;|&nbsp; LinkedIn: @willliamthomason &nbsp;|&nbsp; Portfolio: wgt-edutech.github.io/Portfolio</p>
 
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Professional Summary</h3>
-      <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Founder of WGT EduTech, working to normalise gamified learning. Online tutor and digital creator: eight years teaching English to children, teens and adults, plus online guitar tuition, and hands-on practice in the tools students use &mdash; Blender, Three.js/WebGL, Canva and Photopea. Certified ESL and literacy tutor specialised in evidence-based literacy methods, differentiated instruction for students with disabilities (ADHD, ADD, Autism), and curriculum design using e-learning platforms.</p>
+      <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Founder of WGT EduTech, working to normalise gamified learning. Online tutor and digital creator: eight years teaching English to children, teens and adults, plus online guitar tuition, and hands-on practice in the tools students use &mdash; Blender, Three.js/WebGL, Canva and Photopea. Certified ESL and literacy tutor specialised in evidence-based literacy methods, differentiated instruction for students with disabilities (ADHD, ADD, Autism), and curriculum design using e-learning platforms.</p>
     </div>
 
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Teaching Experience</h3>
-      <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li><strong style="color:#f4f1ea">Founder &mdash; WGT EduTech</strong> (gamified learning studio) &nbsp;|&nbsp; Self-employed, Remote &nbsp;|&nbsp; 2026 &ndash; Present<br>Founded WGT EduTech to normalise gamified learning &mdash; building and publishing the lesson formats, tools and games behind it; 18 public repositories live. Makes content and curriculum for several platforms and languages; recently began teaching beginner Spanish. Shipped learning products: VocabForge, Sliding In (1,452 speaking prompts), VBook Reader and Maker, and IELTS Speaking Practice.</li>
         <li><strong style="color:#f4f1ea">Online English Tutor &mdash; ESL, IELTS &amp; Business English</strong> &nbsp;|&nbsp; Allschool, Remote &nbsp;|&nbsp; 2021 &ndash; Present<br>Teach English and Scratch coding side by side with children: the coding is the content, the English is the medium. Design gamified lessons (XP, streaks, in-lesson challenges) used with real students. Result: a seven-year-old student now needs work two years above her year group to stay challenged, and is the pupil chosen to speak for the school when exchange students visit. Run regular progress assessments and adjust each learner's plan against measurable growth.</li>
         <li><strong style="color:#f4f1ea">Online English Tutor &mdash; ESL, IELTS &amp; Business English</strong> &nbsp;|&nbsp; Fluentify, Remote &nbsp;|&nbsp; 2018 &ndash; Present<br>Teach children, teens and adult professionals across reading, writing, listening and speaking. Write individual learning plans and original materials, adapting instruction for learners with limited first-language literacy and for neurodiverse learners.</li>
@@ -319,7 +319,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Digital Creativity &amp; Build Experience</h3>
-      <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li>Live apps built and shipped &mdash; DOH // ORBITAL CORE (circular Tetris in HTML5 canvas), Scalien (fretboard analysis app)</li>
         <li>Blender &mdash; 3D modelling, materials and rendering (Eevee / Cycles) for animation and game art</li>
         <li>Three.js / WebGL &mdash; interactive 3D scenes, custom shaders, particle systems, scroll-driven 3D in the browser</li>
@@ -331,7 +331,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Field &amp; Project Experience</h3>
-      <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li><strong style="color:#f4f1ea">Gaia Sanctuary &mdash; Regenerative Growing Site</strong> &nbsp;|&nbsp; Field project &nbsp;|&nbsp; 5 years established<br>A regenerative growing site with riverbank restoration, an open garden, a sheltered garden, a tunnel, a nursery and a shadenet greenhouse. Oldest trees on site: 5 years &mdash; proof the system is establishing and maturing. Demonstrates closed-loop water and nutrient cycling, continuous living cover and nursery propagation on a small footprint.</li>
       </ul>
     </div>
@@ -339,25 +339,25 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-bottom:1rem">
       <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem">
         <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Education &amp; Certification</h3>
-        <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+        <ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
           <li><strong style="color:#f4f1ea">TEFL Teaching Certificate</strong> &mdash; TEFL Professional Development Institute, 2016</li>
           <li><strong style="color:#f4f1ea">Bachelor of Commerce (B.Com), Marketing Management</strong> &mdash; University of Pretoria, 2007</li>
         </ul>
       </div>
       <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem">
         <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Languages</h3>
-        <p style="font-size:.9rem;color:rgba(244,241,234,.5)">English &mdash; Native &nbsp;|&nbsp; Afrikaans &mdash; Native &nbsp;|&nbsp; German &mdash; Professional proficiency &nbsp;|&nbsp; Spanish &mdash; B1 (CEFR) &nbsp;|&nbsp; Mandarin, French, Japanese &mdash; Basic</p>
+        <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">English &mdash; Native &nbsp;|&nbsp; Afrikaans &mdash; Native &nbsp;|&nbsp; German &mdash; Professional proficiency &nbsp;|&nbsp; Spanish &mdash; B1 (CEFR) &nbsp;|&nbsp; Mandarin, French, Japanese &mdash; Basic</p>
       </div>
     </div>
 
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Systems &amp; Methods</h3>
-      <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Aquaponics &middot; Hydroponics &middot; Permaculture &middot; Syntropic farming &middot; Jadam / KNF &middot; Hugelkultur &middot; Food forest design &middot; Vermiculture &middot; Compost &middot; Seed saving &middot; Pollinator habitat &middot; Volunteer training &middot; Biodynamics &middot; Living soil</p>
+      <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Aquaponics &middot; Hydroponics &middot; Permaculture &middot; Syntropic farming &middot; Jadam / KNF &middot; Hugelkultur &middot; Food forest design &middot; Vermiculture &middot; Compost &middot; Seed saving &middot; Pollinator habitat &middot; Volunteer training &middot; Biodynamics &middot; Living soil</p>
     </div>
 
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Services Offered</h3>
-      <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li>English for Professionals (Business English, Email, Presentation Skills)</li>
         <li>IELTS and TOEFL Exam Preparation (Reading, Writing, Listening, Speaking)</li>
         <li>English as a Second Language for Children &amp; Teens</li>
@@ -370,11 +370,11 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
       <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem">
         <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Technical Setup</h3>
-        <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Stable high-speed internet, HD webcam, headset and a quiet dedicated workspace (20 Mbps+). Remote delivery via Zoom, Google Classroom, LMS.</p>
+        <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Stable high-speed internet, HD webcam, headset and a quiet dedicated workspace (20 Mbps+). Remote delivery via Zoom, Google Classroom, LMS.</p>
       </div>
       <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem">
         <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Links</h3>
-        <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Portfolio: <a href="https://wgt-edutech.github.io/Portfolio/" target="_blank" rel="noopener" style="color:#ff8a4d">wgt-edutech.github.io/Portfolio</a><br>Instagram: <a href="https://www.instagram.com/grotally_organic/" target="_blank" rel="noopener" style="color:#ff8a4d">@grotally_organic</a>, <a href="https://www.instagram.com/didjiwalla/" target="_blank" rel="noopener" style="color:#ff8a4d">@didjiwalla</a></p>
+        <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Portfolio: <a href="https://wgt-edutech.github.io/Portfolio/" target="_blank" rel="noopener" style="color:#ff8a4d">wgt-edutech.github.io/Portfolio</a><br>Instagram: <a href="https://www.instagram.com/grotally_organic/" target="_blank" rel="noopener" style="color:#ff8a4d">@grotally_organic</a>, <a href="https://www.instagram.com/didjiwalla/" target="_blank" rel="noopener" style="color:#ff8a4d">@didjiwalla</a></p>
       </div>
     </div>
   </div>
@@ -396,22 +396,22 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <p class="content-lede">A seven-layer food forest: canopy, sub-canopy, shrub, herb, ground cover, vine and root. Living soil, native pollinators, continuous cover — a system that feeds people and improves itself year on year. Plan summary (from the food-garden plan):</p>
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin:1rem 0">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Key components</h3>
-      <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li>Daily, weekly, monthly and seasonal task schedules for 4 volunteers.</li>
         <li>Stage-by-stage instructions: seed, seedling, vegetative, flowering, harvest, bolting.</li>
         <li>Pest management, feeding (worm tea, FPJ, biochar/rock dust), and climate control by season.</li>
       </ul>
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin:.8rem 0 .4rem">Daily routine</h3>
-      <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Morning: check soil/moisture, inspect plants for pests, check climate systems. Afternoon: compost/worm farm, FPJ, climate control. Evening: temperature check, planting (cooler temps reduce transplant shock).</p>
+      <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Morning: check soil/moisture, inspect plants for pests, check climate systems. Afternoon: compost/worm farm, FPJ, climate control. Evening: temperature check, planting (cooler temps reduce transplant shock).</p>
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin:.8rem 0 .4rem">Seasonal focus</h3>
-      <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Summer (Dec–Feb): active planting and soil building. Autumn (Mar–May): soil conditioning, chop-and-drop, composting. Winter (Jun–Aug): pruning, frost protection, minimal planting. Spring (Sep–Nov): germination, succession planting, pest management.</p>
+      <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Summer (Dec–Feb): active planting and soil building. Autumn (Mar–May): soil conditioning, chop-and-drop, composting. Winter (Jun–Aug): pruning, frost protection, minimal planting. Spring (Sep–Nov): germination, succession planting, pest management.</p>
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin:.8rem 0 .4rem">Weekly rotation</h3>
-      <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Day 1 soil building/mulching · Day 2 pruning/chop-and-drop · Day 3 planting/biodiversity · Day 4 pest &amp; soil health · Day 5 compost/fermentation · Day 6 monitoring/climate · Day 7 observation/learning.</p>
+      <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Day 1 soil building/mulching · Day 2 pruning/chop-and-drop · Day 3 planting/biodiversity · Day 4 pest &amp; soil health · Day 5 compost/fermentation · Day 6 monitoring/climate · Day 7 observation/learning.</p>
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin:.8rem 0 .4rem">Core principles</h3>
-      <p style="font-size:.9rem;color:rgba(244,241,234,.5)">Mulching and pruning; layered planting (canopy to ground cover); continuous organic matter; biodiversity and rotation. Prune no more than 30% of any plant in one pass. Lunar-calendar aligned planting (new moon: leafy greens; full moon: root crops).</p>
+      <p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Mulching and pruning; layered planting (canopy to ground cover); continuous organic matter; biodiversity and rotation. Prune no more than 30% of any plant in one pass. Lunar-calendar aligned planting (new moon: leafy greens; full moon: root crops).</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Produce sales, nursery stock, volunteer training fees, agri-tourism walks, carbon/soil credits potential.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Produce sales, nursery stock, volunteer training fees, agri-tourism walks, carbon/soil credits potential.</p></div>
     </div>
   </div>
 </section>
@@ -423,7 +423,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <img src="images/gallery/aquaponics.png" alt="Aquaponics system" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Closed-loop aquaponics: fish + plants, zero synthetic fertiliser, minimal water use. Year-round greens and protein from a compact footprint.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Fish and herb sales, premium salad greens, educational demos, reduced water bills.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Fish and herb sales, premium salad greens, educational demos, reduced water bills.</p></div>
     </div>
   </div>
 </section>
@@ -435,7 +435,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <img src="images/gallery/treehouse.png" alt="Tree walkway and treehouse" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Low-impact canopy walkways and treehouses built with natural joinery — a light-touch way to experience the forest and create stay-over income.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Eco-stay bookings, guided canopy walks, photography/location hire.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Eco-stay bookings, guided canopy walks, photography/location hire.</p></div>
     </div>
   </div>
 </section>
@@ -447,7 +447,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <img src="images/gallery/construction-blender.png" alt="Natural building and infrastructure" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Natural building and off-grid infrastructure: earth, timber, biochar, water harvesting. Fixed work on the land in exchange for accommodation.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Reduced build costs, durable assets, skills transfer, workshop labour.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Reduced build costs, durable assets, skills transfer, workshop labour.</p></div>
     </div>
   </div>
 </section>
@@ -459,7 +459,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <img src="images/gallery/adventure.png" alt="Adventure camp setup" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Adventure camp creation and facilitation: low-impact camping, guided experiences, outdoor skills — turning conservation into income.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Camp fees, guided activities, equipment hire, events.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Camp fees, guided activities, equipment hire, events.</p></div>
     </div>
   </div>
 </section>
@@ -471,7 +471,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <img src="images/gallery/workshop.png" alt="Outdoor workshop and events" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Outdoor workshops and events: permaculture, natural building, food preservation, seed saving. Knowledge shared, community built.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Ticket sales, sponsorships, product sales on the day.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Ticket sales, sponsorships, product sales on the day.</p></div>
     </div>
   </div>
 </section>
@@ -483,7 +483,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <img src="images/gallery/retreat.png" alt="Sound journey retreat" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Sound journeys and retreats in the forest: rest, reset, and reconnection. A gentle income stream that also deepens the conservation story.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Retreat fees, sound-healing sessions, merchandise.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Retreat fees, sound-healing sessions, merchandise.</p></div>
     </div>
   </div>
 </section>
@@ -495,11 +495,11 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <img src="images/gallery/black-wattle.jpg" alt="Black wattle clearing" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Black wattle (Acacia mearnsii) is a Category 1b invasive alien plant in South Africa. Clearing it restores water catchments, protects biodiversity and can generate income — both from selling the harvested timber (firewood, charcoal, poles, tannin) and from conservation funding such as the RMB Fund, which directs 1% of net profit after tax to environment and conservation programmes.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-bottom:1rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Timber sales (firewood, charcoal, poles, tannin bark), plus grants/contracts from the RMB Fund and Working for Water for clearing and follow-up treatment.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Timber sales (firewood, charcoal, poles, tannin bark), plus grants/contracts from the RMB Fund and Working for Water for clearing and follow-up treatment.</p></div>
     </div>
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Application process (typical)</h3>
-      <ol style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ol style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li>Identify and map the invaded area; obtain aerial/satellite imagery if possible.</li>
         <li>Register as a water user with the Department of Water and Sanitation if required; apply for demarcation of any Category 2 plants you intend to keep.</li>
         <li>Submit a clearing proposal to the RMB Fund / relevant conservation programme (Working for Water) with site map, block plan, timeline and budget.</li>
@@ -509,7 +509,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     </div>
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Requirements</h3>
-      <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li>Legal land access/permission and, where applicable, a timber or removal permit.</li>
         <li>Accurate map showing property boundaries and all invasive alien plant blocks.</li>
         <li>Block-by-block plan with estimated hectares and method (cut-stump, foliar, manual).</li>
@@ -529,11 +529,11 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <img src="images/gallery/greenhouse.jpg" alt="Biochar production" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
     <p class="content-lede">Carbon-negative soil amendment made by pyrolysis of woody biomass in low-oxygen conditions. Improves water retention, nutrient holding and microbial life in degraded soils — and locks carbon away for centuries. Produced off-grid using a flame-cap (Kon-Tiki) kiln or TLUD stove.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-bottom:1rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Soil amendment sales, carbon credits (future), compost enhancement, and farm productivity gains from healthier soil.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Soil amendment sales, carbon credits (future), compost enhancement, and farm productivity gains from healthier soil.</p></div>
     </div>
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Method (off-grid)</h3>
-      <ol style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ol style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li>Gather dry woody biomass (&lt; 20% moisture); avoid treated wood and glossy paper.</li>
         <li>Build or dig a flame-cap kiln (cone shape, wide top, narrow bottom).</li>
         <li>Light a small fire at the bottom; continuously add biomass on top — the flame cap starves lower layers of oxygen (pyrolysis).</li>
@@ -543,7 +543,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     </div>
     <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem">
       <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Requirements</h3>
-      <ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem;line-height:1.7">
+      <ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem;line-height:1.7">
         <li>Dry feedstock supply (woody biomass, crop residues).</li>
         <li>Safe burn site away from structures with firebreak.</li>
         <li>Quench water on hand — hot biochar reignites easily.</li>
@@ -569,8 +569,8 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <h2 class="content-title">A place to grow, and to give back</h2>
     <p class="content-lede">Isikhova &amp; Ironwood aims to live self-sufficiently and in harmony with Nature, breathing fresh mountain air in the Langeberg. That is exactly the conditions my work is built for.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Why I fit here</h3><ul style="font-size:.9rem;color:rgba(244,241,234,.5);padding-left:1.2rem"><li>Living soil, native pollinators and layered plantings reinforce the mountain veld instead of fighting it.</li><li>Adventure-camp build, tree-walkways and retreat facilitation turn conservation into income, not cost.</li><li>Documenting the journey on social media to generate support and funding for the trust.</li></ul></div>
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Let's talk</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">I can be on the land within weeks — I have my own income, solar and internet. If this resonates, reach out through the Isikhova community page to arrange a conversation about how I can contribute to the next season.</p><p style="margin-top:.8rem"><a href="mailto:williamgraythomason@gmail.com" style="color:#ff8a4d;text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)">Email →</a>&nbsp;&nbsp;<a href="https://wa.me/27671776770" target="_blank" rel="noopener" style="color:#ff8a4d;text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)">WhatsApp →</a></p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Why I fit here</h3><ul style="font-size:1.05rem;color:rgba(244,241,234,.7);padding-left:1.2rem"><li>Living soil, native pollinators and layered plantings reinforce the mountain veld instead of fighting it.</li><li>Adventure-camp build, tree-walkways and retreat facilitation turn conservation into income, not cost.</li><li>Documenting the journey on social media to generate support and funding for the trust.</li></ul></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Let's talk</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">I can be on the land within weeks — I have my own income, solar and internet. If this resonates, reach out through the Isikhova community page to arrange a conversation about how I can contribute to the next season.</p><p style="margin-top:.8rem"><a href="mailto:williamgraythomason@gmail.com" style="color:#ff8a4d;text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)">Email →</a>&nbsp;&nbsp;<a href="https://wa.me/27671776770" target="_blank" rel="noopener" style="color:#ff8a4d;text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)">WhatsApp →</a></p></div>
     </div>
   </div>
 </section>
@@ -581,10 +581,10 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <h2 class="content-title">Plans mapped to the community's needs</h2>
     <p class="content-lede">Based on Isikhova &amp; Ironwood's aim to live self-sufficiently in harmony with Nature in the Langeberg, breathing fresh mountain air — here is how my skills map to the community's needs:</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Living soil &amp; food</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Seven-layer food forest, syntropic beds and aquaponics — poison-free, year-round produce and nursery stock for the community and market.</p></div>
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Water &amp; catchments</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Black wattle clearing restores water catchments and mountain veld; aquaponics reduces water use; rain/dam water harvesting for off-grid supply.</p></div>
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Conservation into income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Adventure camp, tree-walkways, retreats and workshops turn conservation into revenue — supporting the trust without costing the land.</p></div>
-      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Skills &amp; story</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Learning carpentry, bush craft and construction on-site; documenting the journey on social media to generate support and funding for the trust.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Living soil &amp; food</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Seven-layer food forest, syntropic beds and aquaponics — poison-free, year-round produce and nursery stock for the community and market.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Water &amp; catchments</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Black wattle clearing restores water catchments and mountain veld; aquaponics reduces water use; rain/dam water harvesting for off-grid supply.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Conservation into income</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Adventure camp, tree-walkways, retreats and workshops turn conservation into revenue — supporting the trust without costing the land.</p></div>
+      <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Skills &amp; story</h3><p style="font-size:1.05rem;color:rgba(244,241,234,.7)">Learning carpentry, bush craft and construction on-site; documenting the journey on social media to generate support and funding for the trust.</p></div>
     </div>
     <p style="font-size:.8rem;color:rgba(244,241,234,.35);margin-top:1rem">Land, water and biodiversity specifics should be confirmed directly with the Isikhova &amp; Ironwood community (Langeberg, Swellendam).</p>
   </div>
