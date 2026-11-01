@@ -1118,7 +1118,7 @@ var focusVel = 0;
 // continuous target, so the ring can ease onto a slot once the scroll stops.
 var restT = 0;
 var lastFocusRaw = 0;
-var REST_DELAY = 0.12;   // seconds of stillness before snapping onto the slot
+var REST_DELAY = 0;   // start centering immediately when scroll stops
 
 // Spring tuning — near-critical damping, no overshoot. Research (spring-physics
 // tutorials: Heckel, kvin) says smooth UI motion = little/no overshoot + a
@@ -1310,7 +1310,11 @@ function galleryStep(){
     focusTarget = fRaw;
   }else{
     restT += G_FIXED_DT;
-    if(restT >= REST_DELAY && SITE.gallery.snap) focusTarget = Math.round(fRaw);
+    if(restT >= REST_DELAY && SITE.gallery.snap){
+      // smooth ease toward nearest slot — no janky instant step
+      var slot = Math.round(fRaw);
+      focusTarget += (slot - focusTarget) * 0.2;
+    }
   }
 
   // ONE spring drives the horizontal position, so the ring glides as a single
