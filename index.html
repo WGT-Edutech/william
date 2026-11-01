@@ -109,6 +109,8 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 #topNav{opacity:0;pointer-events:none;transition:opacity .4s ease}
 #topNav.visible{opacity:1;pointer-events:auto}
 .bottom-bar{position:fixed;bottom:0;left:0;right:0;height:7rem;background:#000;z-index:45;border-top:1px solid rgba(255,138,77,.18)}
+#bottomBar{opacity:0;pointer-events:none;transition:opacity .4s ease}
+#bottomBar.visible{opacity:1;pointer-events:auto}
 .nav-brand{font-family:'Oswald',sans-serif;font-size:2.3rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
 .brand-mark{display:inline-block;height:3rem;width:auto;vertical-align:-0.3em;margin-right:.5rem}
 .nav-links{display:flex;align-items:center}
@@ -395,7 +397,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
     <p class="content-tag">Project</p>
     <h2 class="content-title">Adventure camp</h2>
     <img src="images/gallery/adventure.png" alt="Adventure camp setup" style="width:100%;max-width:720px;border-radius:12px;margin:1rem 0">
-    <p class="content-lede">Adventure-camp setups that turn conservation into income: low-impact camping, guided experiences, outdoor skills.</p>
+    <p class="content-lede">Adventure camp creation and facilitation: low-impact camping, guided experiences, outdoor skills — turning conservation into income.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
       <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Value / income</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">Camp fees, guided activities, equipment hire, events.</p></div>
       <div style="background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem"><h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#f4f1ea;margin-bottom:.6rem">Approx. initial cost (1 module)</h3><p style="font-size:.9rem;color:rgba(244,241,234,.5)">R 15 000 – R 40 000 (camp kit, signage, basic facilities)</p></div>
@@ -1525,24 +1527,23 @@ window.addEventListener('pageshow', function(ev){
 });
 
 
-// Top nav: only appear after the quote (Room 4) has been passed.
+// Top & bottom bars: appear only after the slogan (Room 3) has been reached.
 (function(){
   var topNav=document.getElementById('topNav');
-  var r4=document.getElementById('r4');
-  function updateTopNav(){
-    if(!topNav||!r4)return;
-    var threshold=r4.offsetTop+r4.offsetHeight;
-    if(window.scrollY>threshold- window.innerHeight*0.5){
-      topNav.classList.add('visible');
-    }else{
-      topNav.classList.remove('visible');
-    }
+  var bottomBar=document.getElementById('bottomBar');
+  var r3=document.getElementById('r3');
+  function updateBars(){
+    if(!r3)return;
+    var threshold=r3.offsetTop;
+    var show = window.scrollY > threshold;
+    if(topNav){ if(show) topNav.classList.add('visible'); else topNav.classList.remove('visible'); }
+    if(bottomBar){ if(show) bottomBar.classList.add('visible'); else bottomBar.classList.remove('visible'); }
   }
-  window.addEventListener('scroll',updateTopNav,{passive:true});
-  updateTopNav();
+  window.addEventListener('scroll',updateBars,{passive:true});
+  updateBars();
 })();
 })();
 </script>
-  <div class="bottom-bar" aria-hidden="true"></div>
+  <div class="bottom-bar" id="bottomBar" aria-hidden="true"></div>
 </body>
 </html>
