@@ -158,7 +158,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
 .gallery-floor.visible{opacity:1}
 
-.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:1600vh}
+.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:800vh}
 @media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:80vh}.r4h{height:300vh}.r5h{height:10vh}.r6h{height:280vh}}
 
 @media(max-width:900px){
@@ -1201,7 +1201,7 @@ gsap.timeline({
 // rise invisible AND left the fixed #galleryFloor black band on screen. One
 // owner per property.
 gsap.timeline({
-  scrollTrigger:{ trigger:'#r6', start:'top bottom', end:'top top', scrub:1 }
+  scrollTrigger:{ trigger:'#r6', start:'top bottom', end:'top 40%', scrub:1 }
 })
 .fromTo('#galleryRoom',
   { yPercent:100, opacity:0 },
