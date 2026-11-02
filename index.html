@@ -710,7 +710,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   <a href="#r6">Projects</a>
   <a href="#connect" class="donate-link">Connect</a>
 </nav>
-<div class="slogan-bar" id="sloganBar">Regenerative Land Steward — for Isikhova &amp; Ironwood.</div>
+<div class="slogan-bar" id="sloganBar">Regenerative Land Steward and Conservationist — for Isikhova &amp; Ironwood.</div>
 <div class="gallery-floor" id="galleryFloor"></div>
 <div class="section-buttons" id="sectionButtons">
   <a href="#about" class="sect-btn">About</a>
@@ -1600,9 +1600,9 @@ function vpStep(){
       radius:vpCfg.radius,baseW:e.baseW,swing:vpCfg.swing,strength:vpCfg.strength,
       opszBase:e.opszBase,opszSwing:.2});
     var resting=e.opszBase==null?e.baseW:e.opszBase;
-    var tW=r.t<=0.001?e.baseW:r.wght;                 // outside radius -> ease to rest
+    var tW=r.t<=0.001?e.baseW:r.wght;
     var tO=r.t<=0.001?(e.opszBase==null?null:e.opszBase):r.opsz;
-    if(!e.cur){e.cur={w:tW,o:tO};}                      // first frame: adopt target
+    if(!e.cur){e.cur={w:tW,o:tO};}
     e.cur.w+=(tW-e.cur.w)*VP_EASE_K;
     if(tO==null){e.cur.o=null;}else{e.cur.o+=(tO-e.cur.o)*VP_EASE_K;}
     if(Math.abs(e.cur.w-e.baseW)<0.6&&(tO==null||Math.abs(e.cur.o-resting)<0.6)){
