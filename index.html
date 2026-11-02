@@ -1506,7 +1506,7 @@ var vpCursor={x:-9999,y:-9999};
 var vpEls=[];
 var VP_SELECTORS=[
   '#descLine','#quoteStage blockquote','#quoteStage cite','#sloganBar',
-  '.content-tag','.tour-date',
+  '.content-tag','.content-title','.content-body p','.content-lede','.tour-date',
   '.tour-card h4','.tour-card p','.tour-card a','.donate-note',
   '.ring-card-pill','.ring-card-title','.sect-btn'
 ];
@@ -1617,7 +1617,7 @@ function vpStep(){
 window.addEventListener('pointermove',function(ev){vpCursor.x=ev.clientX;vpCursor.y=ev.clientY;},{passive:true});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(vpCache);
 vpCache();
-if(!mobilePortrait && !REDUCED) gsap.ticker.add(vpStep);
+if(!REDUCED) gsap.ticker.add(vpStep);
 // Positions go stale while hero text scrubs with the timeline or ring cards
 // glide in 3D — re-cache after the scroll settles (and on resize).
 if(lenis)lenis.on('scroll',vpCacheSoon);
