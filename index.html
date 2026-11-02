@@ -1151,12 +1151,7 @@ gsap.timeline({
 // Enter (rooms 2-3): name, then description, rise into place over the whale.
 .fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.068, ease: 'power2.out' }, 0)
 .fromTo('#descLine', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.125, ease: 'power2.out' }, 0.068)
-// Exit (room 4): whole hero glides up together at linear ease...
-.to('#whaleWrap', { yPercent: -100, duration: 0.682, ease: 'none' }, 0.318)
-.to('#slateStage', { y: '-70vh', duration: 0.682, ease: 'none' }, 0.318)
-.to('#descLine', { y: '-70vh', duration: 0.682, ease: 'none' }, 0.318)
-// ...but OPACITY front-loads so the hero is gone before the quote appears —
-// otherwise the quote overlapped the still-visible name/description.
+// Exit (room 4): hero dissolves to black (no slide) so the quote is revealed.
 .to('#whaleWrap', { opacity: 0, duration: 0.232, ease: 'power2.in' }, 0.318)
 .to('#slateStage', { opacity: 0, duration: 0.232, ease: 'power2.in' }, 0.318)
 .to('#descLine', { opacity: 0, duration: 0.232, ease: 'power2.in' }, 0.318)
