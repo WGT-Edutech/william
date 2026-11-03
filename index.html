@@ -1585,6 +1585,22 @@ function vpSplitAll(){
     for(var i=0;i<list.length;i++)split(list[i]);
   });
 }
+function vpSplitOne(el){
+  if(!el || el.dataset.vpsplit) return;
+  var kids = Array.prototype.slice.call(el.childNodes);
+  kids.forEach(function(node){
+    if(node.nodeType!==3||!node.nodeValue)return;
+    var frag=document.createDocumentFragment();
+    for(var i=0;i<node.nodeValue.length;i++){
+      var s=document.createElement('span');
+      s.className='vpch';
+      s.textContent=node.nodeValue.charAt(i);
+      frag.appendChild(s);
+    }
+    el.replaceChild(frag,node);
+  });
+  el.dataset.vpsplit='1';
+}
 
 function vpCache(){
   if(!VP)return;
@@ -1651,6 +1667,33 @@ function vpStep(){
 }
 window.addEventListener('pointermove',function(ev){vpCursor.x=ev.clientX;vpCursor.y=ev.clientY;},{passive:true});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(vpCache);
+
+// ── LAB INLINE TEXT EDITING (double-click to edit, ?lab=1 only) ──
+var LAB_TEXT_SELECTORS = [
+  '.content-title','.content-lede','.content-tag','.content-body p',
+  '.ring-card-title','.ring-card-pill','.tour-card h4','.tour-card p',
+  '#slateStage','#descLine','#quoteStage blockquote','#quoteStage cite',
+  '#sloganBar','.sect-btn','.donate-note'
+];
+var LAB_TEXT_ELS = [];
+function labTextSetup(){
+  LAB_TEXT_SELECTORS.forEach(function(sel){
+    var list = document.querySelectorAll(sel);
+    for(var i=0;i<list.length;i++){
+      var el = list[i];
+      if(!el.dataset.labtext){ el.dataset.labtext = String(LAB_TEXT_ELS.length); LAB_TEXT_ELS.push(el); }
+    }
+  });
+  try{
+    var saved = JSON.parse(localStorage.getItem('will.labtext')||'{}');
+    LAB_TEXT_ELS.forEach(function(el){
+      var v = saved[el.dataset.labtext];
+      if(typeof v === 'string'){ el.textContent = v; }
+    });
+  }catch(e){}
+}
+labTextSetup();
+
 vpCache();
 if(!REDUCED) gsap.ticker.add(vpStep);
 // Positions go stale while hero text scrubs with the timeline or ring cards
@@ -1819,6 +1862,43 @@ if(!labOn){
     labShow(labToggle.getAttribute('aria-expanded')!=='true');
   });
   labShow(true);
+
+  // Inline text editing: double-click any labelled text to edit in situ.
+  document.addEventListener('dblclick', function(ev){
+    var el = ev.target;
+    // walk up to a labelled container
+    while(el && el !== document.body && !el.dataset.labtext){ el = el.parentNode; }
+    if(!el || !el.dataset.labtext) return;
+    ev.preventDefault();
+    // flatten any per-char spans so editing is clean
+    el.textContent = el.textContent;
+    delete el.dataset.vpsplit;
+    el.contentEditable = 'true';
+    el.focus();
+    // select all
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    function finish(){
+      el.contentEditable = 'false';
+      // save
+      try{
+        var saved = JSON.parse(localStorage.getItem('will.labtext')||'{}');
+        saved[el.dataset.labtext] = el.textContent;
+        localStorage.setItem('will.labtext', JSON.stringify(saved));
+      }catch(e){}
+      // re-split for variable proximity
+      delete el.dataset.vpsplit;
+      if(typeof vpSplitOne === 'function') vpSplitOne(el);
+      if(typeof vpCacheSoon === 'function') vpCacheSoon();
+    }
+    el.addEventListener('blur', finish, {once:true});
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); el.blur(); }
+    }, {once:true});
+  });
 }
 
 // Scroll reset
