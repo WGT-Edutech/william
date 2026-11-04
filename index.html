@@ -1901,7 +1901,24 @@ if(!labOn){
   });
 }
 
-// Scroll reset
+// Toggle autoscroll on click inside project/content sections.
+(function(){
+  var paused = false;
+  document.querySelectorAll('.content-room').forEach(function(sec){
+    sec.addEventListener('click', function(ev){
+      // ignore clicks on links/buttons
+      if(ev.target.closest('a,button')) return;
+      paused = !paused;
+      window.__disableAS = paused;
+      autoScrollOn = !paused;
+      // visual cue
+      sec.style.outline = paused ? '2px solid rgba(255,138,77,.6)' : '';
+      setTimeout(function(){ sec.style.outline=''; }, 600);
+      lastInputT = performance.now();
+      if(!paused && lenis && lenis.isStopped){ lenis.start(); lenis.scrollTo(window.scrollY,{immediate:true}); }
+    });
+  });
+})();
 if('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 // Back/bfcache navigation also restores scroll — reset there too.
