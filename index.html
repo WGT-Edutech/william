@@ -1672,9 +1672,14 @@ function vpSplitAll(){
     el.dataset.vpsplit='1';
   }
   VP_SELECTORS.forEach(function(sel){
-    var list=document.querySelectorAll(sel);
-    for(var i=0;i<list.length;i++)split(list[i]);
-  });
+      var list=document.querySelectorAll(sel);
+      for(var i=0;i<list.length;i++){
+        var el=list[i];
+        // Skip elements inside the projects section
+        if(el.closest('#projects,[id^="proj-"]'))continue;
+        split(el);
+      }
+    });
 }
 function vpSplitOne(el){
   if(!el || el.dataset.vpsplit) return;
@@ -1710,16 +1715,18 @@ function vpCache(){
     });
   }
   VP_SELECTORS.forEach(function(sel){
-    var list=document.querySelectorAll(sel);
-    for(var i=0;i<list.length;i++){
-      var el=list[i];
-      var fx=vpIsFixed(el);
-      if(el.dataset&&el.dataset.vpsplit){
-        var chs=el.querySelectorAll(':scope > span.vpch');
-        for(var c=0;c<chs.length;c++)add(chs[c],fx);
-      }else{add(el,fx);}
-    }
-  });
+      var list=document.querySelectorAll(sel);
+      for(var i=0;i<list.length;i++){
+        var el=list[i];
+        // Skip elements inside the projects section
+        if(el.closest('#projects,[id^="proj-"]'))continue;
+        var fx=vpIsFixed(el);
+        if(el.dataset&&el.dataset.vpsplit){
+          var chs=el.querySelectorAll(':scope > span.vpch');
+          for(var c=0;c<chs.length;c++)add(chs[c],fx);
+        }else{add(el,fx);}
+      }
+    });
   // (nameVPChars excluded from VP: they are driven by the scroll reveal animation)
 }
 
