@@ -1675,7 +1675,7 @@ function vpSplitAll(){
       for(var i=0;i<list.length;i++){
         var el=list[i];
         // Skip elements inside the projects section
-        if(el.closest('#projects,[id^="proj-"]'))continue;
+        if(el.closest('#projects,#tailored,[id^="proj-"]'))continue;
         split(el);
       }
     });
@@ -1718,7 +1718,7 @@ function vpCache(){
       for(var i=0;i<list.length;i++){
         var el=list[i];
         // Skip elements inside the projects section
-        if(el.closest('#projects,[id^="proj-"]'))continue;
+        if(el.closest('#projects,#tailored,[id^="proj-"]'))continue;
         var fx=vpIsFixed(el);
         if(el.dataset&&el.dataset.vpsplit){
           var chs=el.querySelectorAll(':scope > span.vpch');
